@@ -15,6 +15,8 @@
 #ifndef _PROS_MAIN_H_
 #define _PROS_MAIN_H_
 
+void die(const char *errstr, ...);
+
 #ifdef __cplusplus
 extern "C" {
 #endif
