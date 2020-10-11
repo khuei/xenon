@@ -1,17 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
+#include <iostream>
 
 #include "main.h"
-
-void
-die(const char* errstr, ...)
-{
-	va_list ap;
-
-	va_start(ap, errstr);
-	vfprintf(stderr, errstr, ap);
-	va_end(ap);
-
-	exit(1);
-}
+#include "util.h"
