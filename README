@@ -1,0 +1,15 @@
+Program for VEX Change Up
+=========================
+
+Building
+________
+
+Enter the following command to build the program:
+    make clean
+    make
+
+Upload
+______
+
+Use the following command to upload program to cortex:
+    prosv5 upload
