@@ -3,7 +3,7 @@
 #include <cstdarg>
 
 void
-die(const char* errstr, ...)
+die(const char *errstr, ...)
 {
 	va_list ap;
 

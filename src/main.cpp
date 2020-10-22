@@ -18,11 +18,9 @@ opcontrol(void)
 {
 	for (;;) {
 		if (!controller.getDigital(okapi::ControllerDigital::L2)) {
-			drive->xArcade(
-				controller.getAnalog(okapi::ControllerAnalog::rightX),
-				controller.getAnalog(okapi::ControllerAnalog::leftX),
-				controller.getAnalog(okapi::ControllerAnalog::leftY)
-			);
+			drive->xArcade(controller.getAnalog(okapi::ControllerAnalog::rightX),
+			               controller.getAnalog(okapi::ControllerAnalog::leftX),
+			               controller.getAnalog(okapi::ControllerAnalog::leftY));
 		} else if (controller.getDigital(okapi::ControllerDigital::L2)) {
 			/* move left diagonally */
 			front_right.moveVelocity(-100 * controller.getAnalog(okapi::ControllerAnalog::leftY));
