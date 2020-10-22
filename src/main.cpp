@@ -5,6 +5,15 @@
 #include "util.h"
 
 void
+initialize(void)
+{
+	front_left.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
+	back_left.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
+	front_right.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
+	back_right.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
+}
+
+void
 opcontrol(void)
 {
 	for (;;) {
