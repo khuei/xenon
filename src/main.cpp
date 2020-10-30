@@ -7,6 +7,8 @@
 void
 initialize(void)
 {
+	imu.reset();
+
 	front_left.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
 	back_left.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
 	front_right.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
