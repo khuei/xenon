@@ -1,5 +1,7 @@
 #include "port.h"
 
+pros::Imu imu(5);
+
 okapi::Controller controller;
 
 okapi::Motor front_left(1, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);

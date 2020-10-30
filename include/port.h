@@ -2,8 +2,11 @@
 #define PORT
 
 #include "okapi/api.hpp"
+#include "pros/imu.hpp"
 
 using namespace okapi::literals;
+
+extern pros::Imu imu;
 
 extern okapi::Controller controller;
 
