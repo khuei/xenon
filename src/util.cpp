@@ -13,3 +13,11 @@ die(const char *errstr, ...)
 
 	exit(1);
 }
+
+void
+switcher(int *num, int total) {
+	if (*num < total)
+		++(*num);
+	else
+		*num = 0;
+}
