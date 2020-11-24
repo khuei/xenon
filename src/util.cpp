@@ -15,7 +15,8 @@ die(const char *errstr, ...)
 }
 
 void
-switcher(int *num, int total) {
+switcher(int *num, int total)
+{
 	if (*num < total)
 		++(*num);
 	else
