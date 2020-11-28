@@ -21,7 +21,7 @@ okapi::Motor back_right(20,
 			okapi::AbstractMotor::gearset::green,
 			okapi::AbstractMotor::encoderUnits::degrees);
 
-std::shared_ptr<okapi::ChassisController> chassis =
+std::shared_ptr<okapi::ChassisController> drive =
 	okapi::ChassisControllerBuilder()
 		.withMotors(front_left, front_right, back_right, back_left)
 		.withDimensions(okapi::AbstractMotor::gearset::green,
@@ -30,5 +30,5 @@ std::shared_ptr<okapi::ChassisController> chassis =
 		.withOdometry()
 		.buildOdometry();
 
-std::shared_ptr<okapi::XDriveModel> drive =
-	std::dynamic_pointer_cast<okapi::XDriveModel>(chassis->getModel());
+std::shared_ptr<okapi::XDriveModel> x_drive =
+	std::dynamic_pointer_cast<okapi::XDriveModel>(drive->getModel());
