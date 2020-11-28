@@ -7,7 +7,10 @@
 void
 initialize(void)
 {
-	imu.reset();
+	if (imu.reset())
+		fprintf(stdout, "imu: calibrated");
+	else
+		fprintf(stderr, "imu: failed to calibrated");
 
 	front_left.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
 	back_left.setBrakeMode(okapi::AbstractMotor::brakeMode::brake);
