@@ -1,7 +1,7 @@
 #include "chassis.h"
 
-namespace chassis
-{
+namespace chassis {
+
 void
 reset(void)
 {
@@ -46,4 +46,5 @@ arcade(void)
 			controller.getAnalog(okapi::ControllerAnalog::rightY));
 	}
 }
-}
+
+} // namespace chassis
