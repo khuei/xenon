@@ -31,7 +31,7 @@ std::shared_ptr<okapi::ChassisController> drive =
 	okapi::ChassisControllerBuilder()
 		.withMotors(front_left, front_right, back_right, back_left)
 		.withDimensions(okapi::AbstractMotor::gearset::green,
-				{ { 4_in, 11.5_in }, okapi::imev5GreenTPR })
+				{ { 3.85_in, 22.75_in }, okapi::imev5GreenTPR })
 		.withMaxVelocity(100)
 		.withOdometry()
 		.buildOdometry();
