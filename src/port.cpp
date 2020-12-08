@@ -21,6 +21,12 @@ okapi::Motor back_right(20,
 			okapi::AbstractMotor::gearset::green,
 			okapi::AbstractMotor::encoderUnits::degrees);
 
+okapi::Motor top_intake(8, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor bottom_intake(9, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+
+okapi::Motor left_intake(12, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor right_intake(19, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+
 std::shared_ptr<okapi::ChassisController> drive =
 	okapi::ChassisControllerBuilder()
 		.withMotors(front_left, front_right, back_right, back_left)
