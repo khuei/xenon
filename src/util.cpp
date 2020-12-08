@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <cstdarg>
 
+namespace util {
+
 void
 die(const char *errstr, ...)
 {
@@ -22,3 +24,5 @@ switcher(int *num, int total)
 	else
 		*num = 0;
 }
+
+} // namespace util

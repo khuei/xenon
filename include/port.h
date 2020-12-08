@@ -15,7 +15,7 @@ extern okapi::Motor back_left;
 extern okapi::Motor front_right;
 extern okapi::Motor back_right;
 
-extern std::shared_ptr<okapi::ChassisController> chassis;
-extern std::shared_ptr<okapi::XDriveModel> drive;
+extern std::shared_ptr<okapi::ChassisController> drive;
+extern std::shared_ptr<okapi::XDriveModel> x_drive;
 
 #endif
