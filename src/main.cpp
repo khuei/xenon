@@ -15,7 +15,6 @@ initialize(void)
 	else
 		fprintf(stderr, "imu: failed to calibrated");
 
-	imu.reset();
 	chassis::reset();
 
 	chassis::set_brake(okapi::AbstractMotor::brakeMode::brake);
