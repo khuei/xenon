@@ -9,11 +9,11 @@ okapi::Motor back_left(11, false, okapi::AbstractMotor::gearset::green, okapi::A
 okapi::Motor front_right(10, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 okapi::Motor back_right(20, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
-okapi::Motor top_intake(8, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor bottom_intake(9, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor top_intake(8, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor bottom_intake(9, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
-okapi::Motor left_intake(12, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
-okapi::Motor right_intake(19, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor left_intake(12, false, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
+okapi::Motor right_intake(19, true, okapi::AbstractMotor::gearset::green, okapi::AbstractMotor::encoderUnits::degrees);
 
 std::shared_ptr<okapi::ChassisController> drive =
 	okapi::ChassisControllerBuilder()
