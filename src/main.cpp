@@ -10,10 +10,13 @@
 void
 initialize(void)
 {
-	if (imu.reset())
+	if (imu.calibrate())
 		fprintf(stdout, "imu: calibrated");
 	else
 		fprintf(stderr, "imu: failed to calibrated");
+
+	while (imu.isCalibrating())
+		rate.delayUntil(10_ms);
 
 	chassis::reset();
 	chassis::set_brake(okapi::AbstractMotor::brakeMode::brake);

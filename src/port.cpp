@@ -1,6 +1,8 @@
 #include "port.h"
 
-pros::Imu imu(5);
+okapi::Rate rate;
+
+okapi::IMU imu(5, okapi::IMUAxes::z);
 
 okapi::Controller controller;
 

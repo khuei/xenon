@@ -6,7 +6,9 @@
 
 using namespace okapi::literals;
 
-extern pros::Imu imu;
+extern okapi::Rate rate;
+
+extern okapi::IMU imu;
 
 extern okapi::Controller controller;
 
