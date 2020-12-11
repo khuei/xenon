@@ -2,7 +2,6 @@
 #define PORT
 
 #include "okapi/api.hpp"
-#include "pros/imu.hpp"
 
 using namespace okapi::literals;
 
