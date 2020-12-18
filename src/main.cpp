@@ -10,6 +10,8 @@
 void
 initialize(void)
 {
+	okapi::Logger::setDefaultLogger(okapi_logger);
+
 	if (imu.calibrate())
 		fprintf(stdout, "imu: calibrated");
 	else

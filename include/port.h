@@ -11,6 +11,8 @@ extern okapi::IMU imu;
 
 extern okapi::Controller controller;
 
+extern std::shared_ptr<okapi::Logger> okapi_logger;
+
 extern okapi::Motor front_left;
 extern okapi::Motor back_left;
 extern okapi::Motor front_right;
