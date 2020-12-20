@@ -78,6 +78,8 @@ opcontrol(void)
 			break;
 		}
 
+		gui::reload_diagnostic();
+
 		rate.delayUntil(10_ms);
 	}
 }

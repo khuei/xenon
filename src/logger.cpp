@@ -33,7 +33,6 @@ ebuf(void)
 void
 elog(const char *str)
 {
-
 	std::uint32_t millisecond = pros::millis();
 	std::uint32_t second = millisecond / 1000;
 	std::uint32_t minute = second / 60;
