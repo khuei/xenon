@@ -2,44 +2,21 @@
 
 #include "main.h"
 #include "port.h"
-#include "util.h"
-#include "intake.h"
-#include "logger.h"
-#include "chassis.h"
+
 #include "gui.h"
+#include "logger.h"
+
+#include "intake.h"
+#include "chassis.h"
 
 void
 initialize(void)
 {
 	gui::init();
+	logger::init();
 
-	fclose(fopen("/usd/event.log", "w"));
-
-	logger::elog("pros: start initialization");
-
-	okapi::Logger::setDefaultLogger(okapi_logger);
-
-	if (imu.calibrate())
-		logger::elog("imu: calibrated");
-	else
-		logger::elog("imu: failed to calibrated");
-
-	while (imu.isCalibrating())
-		rate.delayUntil(10_ms);
-
-	logger::elog("chassis: reset");
-	chassis::reset();
-
-	logger::elog("chassis: set brake mode to brake");
-	chassis::set_brake(okapi::AbstractMotor::brakeMode::brake);
-
-	logger::elog("intake: reset");
-	intake::reset();
-
-	logger::elog("intake: set brake mode to coast");
-	intake::set_brake(okapi::AbstractMotor::brakeMode::coast);
-
-	logger::elog("pros: end initialization\n");
+	chassis::init();
+	intake::init();
 }
 
 void
