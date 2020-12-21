@@ -24,7 +24,8 @@ extern std::shared_ptr<okapi::Motor> bottom_intake;
 extern std::shared_ptr<okapi::Motor> left_intake;
 extern std::shared_ptr<okapi::Motor> right_intake;
 
-extern std::shared_ptr<okapi::ChassisController> drive;
+extern std::shared_ptr<okapi::OdomChassisController> drive;
+extern std::shared_ptr<okapi::AsyncMotionProfileController> drive_profile;
 extern std::shared_ptr<okapi::XDriveModel> x_drive;
 
 #endif

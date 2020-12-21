@@ -55,7 +55,7 @@ std::shared_ptr<okapi::Motor> right_intake = std::make_shared<okapi::Motor>(19,
 									    okapi::AbstractMotor::encoderUnits::degrees,
 									    okapi::Logger::getDefaultLogger());
 
-std::shared_ptr<okapi::ChassisController> drive =
+std::shared_ptr<okapi::OdomChassisController> drive =
 	okapi::ChassisControllerBuilder()
 		.withMotors(front_left, front_right, back_right, back_left)
 		.withDimensions(okapi::AbstractMotor::gearset::green, { { 3.85_in, 22.75_in }, okapi::imev5GreenTPR })
@@ -63,5 +63,12 @@ std::shared_ptr<okapi::ChassisController> drive =
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.withOdometry()
 		.buildOdometry();
+
+std::shared_ptr<okapi::AsyncMotionProfileController> drive_profile =
+	okapi::AsyncMotionProfileControllerBuilder()
+		.withLimits({0.5, 0.5, 0})
+		.withOutput(drive)
+		.withLogger(okapi::Logger::getDefaultLogger())
+		.buildMotionProfileController();
 
 std::shared_ptr<okapi::XDriveModel> x_drive = std::dynamic_pointer_cast<okapi::XDriveModel>(drive->getModel());
