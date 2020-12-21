@@ -5,19 +5,19 @@ namespace chassis {
 void
 reset(void)
 {
-	front_left.tarePosition();
-	back_left.tarePosition();
-	front_right.tarePosition();
-	back_right.tarePosition();
+	front_left->tarePosition();
+	back_left->tarePosition();
+	front_right->tarePosition();
+	back_right->tarePosition();
 }
 
 void
 set_brake(okapi::AbstractMotor::brakeMode brake_mode)
 {
-	front_left.setBrakeMode(brake_mode);
-	back_left.setBrakeMode(brake_mode);
-	front_right.setBrakeMode(brake_mode);
-	back_right.setBrakeMode(brake_mode);
+	front_left->setBrakeMode(brake_mode);
+	back_left->setBrakeMode(brake_mode);
+	front_right->setBrakeMode(brake_mode);
+	back_right->setBrakeMode(brake_mode);
 }
 
 void

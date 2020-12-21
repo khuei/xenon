@@ -18,11 +18,11 @@ void
 reload_diagnostic(void)
 {
 	std::string text =
-	"front left motor: " + std::to_string(front_left.getPosition()) + "\n" +
-	"front right motor: " + std::to_string(front_right.getPosition()) + "\n" +
-	"back left motor: " + std::to_string(back_left.getPosition()) + "\n" +
-	"back right motor: " + std::to_string(back_right.getPosition()) + "\n" +
-	"inertial sensor: " + std::to_string(imu.get()) + "\n";
+	"front left motor: " + std::to_string(front_left->getPosition()) + "\n" +
+	"front right motor: " + std::to_string(front_right->getPosition()) + "\n" +
+	"back left motor: " + std::to_string(back_left->getPosition()) + "\n" +
+	"back right motor: " + std::to_string(back_right->getPosition()) + "\n" +
+	"inertial sensor: " + std::to_string(imu->get()) + "\n";
 	lv_label_set_text(diagnostic_label, text.c_str());
 }
 
@@ -43,7 +43,7 @@ init(void)
 
 	log_tab = lv_tabview_add_tab(tabview, "Log");
 	log_stream = lv_label_create(log_tab, NULL);
-	lv_label_set_text(log_stream, logger::ebuf());
+	reload_log();
 }
 
 } // namespace gui

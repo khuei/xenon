@@ -19,12 +19,12 @@ initialize(void)
 
 	okapi::Logger::setDefaultLogger(okapi_logger);
 
-	if (imu.calibrate())
+	if (imu->calibrate())
 		logger::elog("imu: calibrated");
 	else
 		logger::elog("imu: failed to calibrated");
 
-	while (imu.isCalibrating())
+	while (imu->isCalibrating())
 		rate.delayUntil(10_ms);
 
 	logger::elog("chassis: reset");

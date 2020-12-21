@@ -2,57 +2,58 @@
 
 okapi::Rate rate;
 
-okapi::IMU imu(5, okapi::IMUAxes::z);
-
 okapi::Controller controller;
+
+std::shared_ptr<okapi::IMU> imu = std::make_shared<okapi::IMU>(5, okapi::IMUAxes::z);
 
 std::shared_ptr<okapi::Logger> okapi_logger =
 	std::make_shared<okapi::Logger>(okapi::TimeUtilFactory::createDefault().getTimer(),
 					"/usd/event.log",
 					okapi::Logger::LogLevel::debug);
 
-okapi::Motor front_left(1,
-			false,
-			okapi::AbstractMotor::gearset::green,
-			okapi::AbstractMotor::encoderUnits::degrees,
-			okapi::Logger::getDefaultLogger());
-okapi::Motor back_left(11,
-		       false,
-		       okapi::AbstractMotor::gearset::green,
-		       okapi::AbstractMotor::encoderUnits::degrees,
-		       okapi::Logger::getDefaultLogger());
-okapi::Motor front_right(10,
-			 true,
-			 okapi::AbstractMotor::gearset::green,
-			 okapi::AbstractMotor::encoderUnits::degrees,
-			 okapi::Logger::getDefaultLogger());
-okapi::Motor back_right(20,
-			true,
-			okapi::AbstractMotor::gearset::green,
-			okapi::AbstractMotor::encoderUnits::degrees,
-			okapi::Logger::getDefaultLogger());
+std::shared_ptr<okapi::Motor> front_left = std::make_shared<okapi::Motor>(1,
+									  false,
+									  okapi::AbstractMotor::gearset::green,
+									  okapi::AbstractMotor::encoderUnits::degrees,
+									  okapi::Logger::getDefaultLogger());
+std::shared_ptr<okapi::Motor> back_left = std::make_shared<okapi::Motor>(11,
+									 false,
+									 okapi::AbstractMotor::gearset::green,
+									 okapi::AbstractMotor::encoderUnits::degrees,
+									 okapi::Logger::getDefaultLogger());
+std::shared_ptr<okapi::Motor> front_right = std::make_shared<okapi::Motor>(10,
+									   true,
+									   okapi::AbstractMotor::gearset::green,
+									   okapi::AbstractMotor::encoderUnits::degrees,
+									   okapi::Logger::getDefaultLogger());
+std::shared_ptr<okapi::Motor> back_right = std::make_shared<okapi::Motor>(20,
+									  true,
+									  okapi::AbstractMotor::gearset::green,
+									  okapi::AbstractMotor::encoderUnits::degrees,
+									  okapi::Logger::getDefaultLogger());
 
-okapi::Motor top_intake(8,
-			true,
-			okapi::AbstractMotor::gearset::green,
-			okapi::AbstractMotor::encoderUnits::degrees,
-			okapi::Logger::getDefaultLogger());
-okapi::Motor bottom_intake(9,
-			   false,
-			   okapi::AbstractMotor::gearset::green,
-			   okapi::AbstractMotor::encoderUnits::degrees,
-			   okapi::Logger::getDefaultLogger());
+std::shared_ptr<okapi::Motor> top_intake = std::make_shared<okapi::Motor>(8,
+									  true,
+									  okapi::AbstractMotor::gearset::green,
+									  okapi::AbstractMotor::encoderUnits::degrees,
+									  okapi::Logger::getDefaultLogger());
+std::shared_ptr<okapi::Motor> bottom_intake =
+	std::make_shared<okapi::Motor>(9,
+				       false,
+				       okapi::AbstractMotor::gearset::green,
+				       okapi::AbstractMotor::encoderUnits::degrees,
+				       okapi::Logger::getDefaultLogger());
 
-okapi::Motor left_intake(12,
-			 false,
-			 okapi::AbstractMotor::gearset::green,
-			 okapi::AbstractMotor::encoderUnits::degrees,
-			 okapi::Logger::getDefaultLogger());
-okapi::Motor right_intake(19,
-			  true,
-			  okapi::AbstractMotor::gearset::green,
-			  okapi::AbstractMotor::encoderUnits::degrees,
-			  okapi::Logger::getDefaultLogger());
+std::shared_ptr<okapi::Motor> left_intake = std::make_shared<okapi::Motor>(12,
+									   false,
+									   okapi::AbstractMotor::gearset::green,
+									   okapi::AbstractMotor::encoderUnits::degrees,
+									   okapi::Logger::getDefaultLogger());
+std::shared_ptr<okapi::Motor> right_intake = std::make_shared<okapi::Motor>(19,
+									    true,
+									    okapi::AbstractMotor::gearset::green,
+									    okapi::AbstractMotor::encoderUnits::degrees,
+									    okapi::Logger::getDefaultLogger());
 
 std::shared_ptr<okapi::ChassisController> drive =
 	okapi::ChassisControllerBuilder()
