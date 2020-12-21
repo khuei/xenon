@@ -1,4 +1,5 @@
 #include "intake.h"
+#include "logger.h"
 
 namespace intake {
 
@@ -41,6 +42,16 @@ run_both(double speed)
 	right_intake->moveVelocity(speed);
 	top_intake->moveVelocity(speed);
 	bottom_intake->moveVelocity(speed);
+}
+
+void
+init(void)
+{
+	intake::reset();
+	logger::elog("intake: reset");
+
+	intake::set_brake(okapi::AbstractMotor::brakeMode::coast);
+	logger::elog("intake: set brake mode to coast");
 }
 
 } // namespace intake

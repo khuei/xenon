@@ -3,6 +3,7 @@
 #include "pros/rtos.hpp"
 #include "logger.h"
 #include "gui.h"
+#include "port.h"
 
 namespace logger {
 
@@ -42,6 +43,16 @@ elog(const char *str)
 	fprintf(event_log, "[%02ld:%02ld:%02ld] %s\n", hour, minute, second, str);
 	fclose(event_log);
 	gui::reload_log();
+}
+
+void
+init(void)
+{
+	fclose(fopen("/usd/event.log", "w"));
+	logger::elog("logger: clear /usd/event.log");
+
+	okapi::Logger::setDefaultLogger(okapi_logger);
+	logger::elog("logger: set okapi_logger as default logger");
 }
 
 } // namespace logger
