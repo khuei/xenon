@@ -2,11 +2,12 @@
 
 #include "main.h"
 #include "port.h"
-#include "util.h"
-#include "intake.h"
-#include "logger.h"
-#include "chassis.h"
+
 #include "gui.h"
+#include "logger.h"
+
+#include "intake.h"
+#include "chassis.h"
 
 void
 initialize(void)
