@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "pros/misc.hpp"
+
 #include "main.h"
 #include "port.h"
 
@@ -23,6 +25,9 @@ void
 opcontrol(void)
 {
 	for (;;) {
+		if (controller.getDigital(okapi::ControllerDigital::left) && !pros::competition::is_connected())
+			autonomous();
+
 		chassis::arcade();
 
 		switch (controller.getDigital(okapi::ControllerDigital::L1)) {
