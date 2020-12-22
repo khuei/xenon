@@ -44,7 +44,6 @@ init(void)
 
 	chassis::set_brake(okapi::AbstractMotor::brakeMode::brake);
 	logger::elog("chassis: set brake mode to brake");
-
 }
 
 } // namespace chassis

@@ -20,11 +20,11 @@ int
 gui_task(void)
 {
 	for (;;) {
-		std::string text = "front left motor: " + std::to_string(front_left->getPosition()) + "\n"
-			+ "front right motor: " + std::to_string(front_right->getPosition()) + "\n"
-			+ "back left motor: " + std::to_string(back_left->getPosition()) + "\n"
-			+ "back right motor: " + std::to_string(back_right->getPosition()) + "\n"
-			+ "inertial sensor: " + std::to_string(imu->get()) + "\n";
+		std::string text = "front left motor: " + std::to_string(front_left->getPosition()) + "\n" +
+				   "front right motor: " + std::to_string(front_right->getPosition()) + "\n" +
+				   "back left motor: " + std::to_string(back_left->getPosition()) + "\n" +
+				   "back right motor: " + std::to_string(back_right->getPosition()) + "\n" +
+				   "inertial sensor: " + std::to_string(imu->get()) + "\n";
 		lv_label_set_text(diagnostic_label, text.c_str());
 
 		lv_label_set_text(log_stream, logger::ebuf());
