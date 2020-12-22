@@ -5,8 +5,6 @@
 
 using namespace okapi::literals;
 
-extern okapi::Rate rate;
-
 extern okapi::Controller controller;
 
 extern std::shared_ptr<okapi::IMU> imu;

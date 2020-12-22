@@ -1,7 +1,5 @@
 #include "port.h"
 
-okapi::Rate rate;
-
 okapi::Controller controller;
 
 std::shared_ptr<okapi::IMU> imu = std::make_shared<okapi::IMU>(5, okapi::IMUAxes::z);

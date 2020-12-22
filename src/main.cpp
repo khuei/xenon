@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "pros/rtos.hpp"
 #include "pros/misc.hpp"
 
 #include "main.h"
@@ -62,6 +63,6 @@ opcontrol(void)
 
 		gui::reload_diagnostic();
 
-		rate.delayUntil(10_ms);
+		pros::delay(10);
 	}
 }

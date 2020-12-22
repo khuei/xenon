@@ -1,3 +1,5 @@
+#include "pros/rtos.hpp"
+
 #include "chassis.h"
 #include "logger.h"
 
@@ -34,7 +36,7 @@ init(void)
 {
 	imu->calibrate();
 	while (imu->isCalibrating())
-		rate.delayUntil(10_ms);
+		pros::delay(10);
 	logger::elog("imu: calibrated");
 
 	chassis::reset();
