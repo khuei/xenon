@@ -43,7 +43,6 @@ elog(const char *str)
 	FILE *event_log = fopen("/usd/event.log", "a");
 	fprintf(event_log, "[%02ld:%02ld:%02ld] %s\n", hour, minute, second, str);
 	fclose(event_log);
-	gui::reload_log();
 }
 
 void

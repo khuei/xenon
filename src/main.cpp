@@ -61,8 +61,6 @@ opcontrol(void)
 			break;
 		}
 
-		gui::reload_diagnostic();
-
 		pros::delay(10);
 	}
 }
