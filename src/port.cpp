@@ -66,7 +66,7 @@ std::shared_ptr<okapi::OdomChassisController> drive =
 
 std::shared_ptr<okapi::AsyncMotionProfileController> drive_profile =
 	okapi::AsyncMotionProfileControllerBuilder()
-		.withLimits({0.5, 0.5, 0})
+		.withLimits({1, 2, 10})
 		.withOutput(drive)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.buildMotionProfileController();
