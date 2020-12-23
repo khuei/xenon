@@ -29,7 +29,7 @@ gui_task(void)
 
 		lv_label_set_text(log_stream, logger::ebuf());
 
-		pros::delay(10);
+		pros::delay(1000);
 	}
 }
 
