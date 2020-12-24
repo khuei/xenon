@@ -5,8 +5,8 @@
 
 namespace odom {
 
-okapi::QAngle get_delta_theta(std::array<okapi::QLength, 2>);
-okapi::QLength get_delta_dist(std::array<okapi::QLength, 2>);
+okapi::QAngle get_delta_theta(okapi::Point);
+okapi::QLength get_delta_dist(okapi::Point);
 
 } // namespace odom
 

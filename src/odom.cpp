@@ -5,14 +5,14 @@
 namespace odom {
 
 okapi::QAngle
-get_delta_theta(std::array<okapi::QLength, 2> coord)
+get_delta_theta(okapi::Point coord)
 {
 	okapi::QLength global_x = drive->getState().x;
 	okapi::QLength global_y = drive->getState().y;
 	okapi::QAngle global_theta = drive->getState().theta;
 
-	okapi::QLength x = coord[0];
-	okapi::QLength y = coord[1];
+	okapi::QLength x = coord.x;
+	okapi::QLength y = coord.y;
 	okapi::QAngle delta_theta;
 
 	x -= global_x;
@@ -30,13 +30,13 @@ get_delta_theta(std::array<okapi::QLength, 2> coord)
 }
 
 okapi::QLength
-get_delta_dist(std::array<okapi::QLength, 2> coord)
+get_delta_dist(okapi::Point coord)
 {
 	okapi::QLength global_x = drive->getState().x;
 	okapi::QLength global_y = drive->getState().y;
 
-	okapi::QLength x = coord[0];
-	okapi::QLength y = coord[1];
+	okapi::QLength x = coord.x;
+	okapi::QLength y = coord.y;
 
 	x -= global_x;
 	y -= global_y;
