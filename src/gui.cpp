@@ -13,6 +13,9 @@ lv_obj_t *tabview;
 lv_obj_t *diagnostic_tab;
 lv_obj_t *diagnostic_label;
 
+lv_obj_t *odom_tab;
+lv_obj_t *odom_label;
+
 lv_obj_t *log_tab;
 lv_obj_t *log_stream;
 
@@ -27,6 +30,11 @@ gui_task(void)
 				   "inertial sensor: " + std::to_string(imu->get()) + "\n";
 		lv_label_set_text(diagnostic_label, text.c_str());
 
+		std::string pos = "global_x: " + std::to_string(drive->getState().x.convert(okapi::inch)) + "_in\n" +
+		                  "global_y: " + std::to_string(drive->getState().y.convert(okapi::inch)) + "_in\n" +
+		                  "global_theta: " + std::to_string(drive->getState().theta.convert(okapi::degree)) + "_deg\n";
+		lv_label_set_text(odom_label, pos.c_str());
+
 		lv_label_set_text(log_stream, logger::ebuf());
 
 		pros::delay(1000);
@@ -40,6 +48,9 @@ init(void)
 
 	diagnostic_tab = lv_tabview_add_tab(tabview, "Diagnostic");
 	diagnostic_label = lv_label_create(diagnostic_tab, NULL);
+
+	odom_tab = lv_tabview_add_tab(tabview, "Odometry");
+	odom_label = lv_label_create(odom_tab, NULL);
 
 	log_tab = lv_tabview_add_tab(tabview, "Log");
 	log_stream = lv_label_create(log_tab, NULL);
