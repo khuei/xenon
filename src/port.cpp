@@ -61,7 +61,7 @@ std::shared_ptr<okapi::OdomChassisController> drive =
 		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
 		.withMaxVelocity(100)
 		.withLogger(okapi::Logger::getDefaultLogger())
-		.withOdometry()
+		.withOdometry(okapi::StateMode::CARTESIAN)
 		.buildOdometry();
 
 std::shared_ptr<okapi::AsyncMotionProfileController> drive_profile =
