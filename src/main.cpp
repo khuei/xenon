@@ -12,6 +12,8 @@
 #include "intake.h"
 #include "chassis.h"
 
+#include "purepursuit.h"
+
 void
 initialize(void)
 {
@@ -64,7 +66,13 @@ opcontrol(void)
 
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X))
 			intake::tuner(pros::E_CONTROLLER_DIGITAL_UP, pros::E_CONTROLLER_DIGITAL_DOWN);
-		
+
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B))
+			purepursuit::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+					   pros::E_CONTROLLER_DIGITAL_RIGHT,
+					   pros::E_CONTROLLER_DIGITAL_UP,
+					   pros::E_CONTROLLER_DIGITAL_DOWN);
+
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
 			switch (gui::started) {
 			case false:
