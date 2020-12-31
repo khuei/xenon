@@ -19,6 +19,10 @@ lv_obj_t *odom_label;
 lv_obj_t *log_tab;
 lv_obj_t *log_stream;
 
+bool started;
+
+std::shared_ptr<pros::Task> guiTask;
+
 int
 gui_task(void)
 {
@@ -55,7 +59,22 @@ init(void)
 	log_tab = lv_tabview_add_tab(tabview, "Log");
 	log_stream = lv_label_create(log_tab, NULL);
 
-	pros::Task guiTask(gui_task);
+	if (!guiTask)
+		guiTask = std::make_shared<pros::Task>(gui_task, "gui task (xenon)");
+	else
+		guiTask->resume();
+
+	started = true;
+}
+
+void
+stop(void)
+{
+	lv_obj_clean(lv_scr_act());
+
+	guiTask->suspend();
+
+	started = false;
 }
 
 } // namespace gui

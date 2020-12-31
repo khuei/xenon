@@ -61,6 +61,17 @@ opcontrol(void)
 			break;
 		}
 
+		if (controller.getDigital(okapi::ControllerDigital::Y)) {
+			switch(gui::started) {
+			case false:
+				gui::init();
+				break;
+			case true:
+				gui::stop();
+				break;
+			}
+		}
+
 		pros::delay(10);
 	}
 }

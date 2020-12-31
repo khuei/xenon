@@ -5,7 +5,9 @@
 
 namespace gui {
 
+extern bool started;
 void init(void);
+void stop(void);
 
 } // namespace gui
 
