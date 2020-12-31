@@ -1,6 +1,6 @@
 #include "port.h"
 
-okapi::Controller controller;
+pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 std::shared_ptr<okapi::IMU> imu = std::make_shared<okapi::IMU>(5, okapi::IMUAxes::z);
 

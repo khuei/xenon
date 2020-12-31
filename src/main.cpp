@@ -26,42 +26,42 @@ void
 opcontrol(void)
 {
 	for (;;) {
-		if (controller.getDigital(okapi::ControllerDigital::left) && !pros::competition::is_connected())
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A) && !pros::competition::is_connected())
 			autonomous();
 
 		chassis::arcade();
 
-		switch (controller.getDigital(okapi::ControllerDigital::L1)) {
+		switch (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
 		case 0:
-			if (controller.getDigital(okapi::ControllerDigital::R1) &&
-			    controller.getDigital(okapi::ControllerDigital::L2))
+			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
+			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_internal(-200);
-			else if (controller.getDigital(okapi::ControllerDigital::R1) &&
-				 !controller.getDigital(okapi::ControllerDigital::L2))
+			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
+				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_internal(200);
 			else
 				intake::run_internal(0);
 
-			if (controller.getDigital(okapi::ControllerDigital::R2) &&
-			    controller.getDigital(okapi::ControllerDigital::L2))
+			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
+			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_front(-200);
-			else if (controller.getDigital(okapi::ControllerDigital::R2) &&
-				 !controller.getDigital(okapi::ControllerDigital::L2))
+			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
+				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_front(200);
 			else
 				intake::run_front(0);
 			break;
 		case 1:
-			if (controller.getDigital(okapi::ControllerDigital::R1))
+			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
 				intake::run_both(-200);
-			else if (controller.getDigital(okapi::ControllerDigital::R2))
+			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
 				intake::run_both(200);
 			else
 				intake::run_both(0);
 			break;
 		}
 
-		if (controller.getDigital(okapi::ControllerDigital::Y)) {
+		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
 			switch(gui::started) {
 			case false:
 				gui::init();

@@ -2,10 +2,11 @@
 #define PORT
 
 #include "okapi/api.hpp"
+#include "pros/rtos.hpp"
 
 using namespace okapi::literals;
 
-extern okapi::Controller controller;
+extern pros::Controller master;
 
 extern std::shared_ptr<okapi::IMU> imu;
 

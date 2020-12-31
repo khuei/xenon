@@ -26,9 +26,9 @@ set_brake(okapi::AbstractMotor::brakeMode brake_mode)
 void
 arcade(void)
 {
-	x_drive->xArcade(controller.getAnalog(okapi::ControllerAnalog::leftX),
-			 controller.getAnalog(okapi::ControllerAnalog::leftY),
-			 controller.getAnalog(okapi::ControllerAnalog::rightX));
+	x_drive->xArcade(master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X),
+			 master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),
+			 master.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
 }
 
 void
