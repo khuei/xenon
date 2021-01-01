@@ -8,6 +8,7 @@
 namespace gui {
 
 enum gui_tab {
+	CHASSIS_TAB,
 	DIAGNOSTIC_TAB,
 	ODOM_TAB,
 	LOG_TAB,
@@ -16,6 +17,12 @@ enum gui_tab {
 int current_tab = 0;
 
 lv_obj_t *tabview;
+
+lv_obj_t *chassis_tab;
+lv_obj_t *chassis_left_speed_gauge;
+lv_obj_t *chassis_right_speed_gauge;
+lv_obj_t *chassis_left_label;
+lv_obj_t *chassis_right_label;
 
 lv_obj_t *diagnostic_tab;
 lv_obj_t *diagnostic_label;
@@ -34,6 +41,23 @@ int
 gui_task(void)
 {
 	for (;;) {
+		double chassis_left_speed = (front_left->getActualVelocity() + back_left->getActualVelocity()) / 2;
+		double chassis_right_speed = (front_right->getActualVelocity() + back_right->getActualVelocity()) / 2;
+
+		double chassis_left_pos = (front_left->getPosition() + back_left->getPosition()) / 2;
+		double chassis_right_pos = (front_right->getPosition() + back_right->getPosition()) / 2;
+
+		lv_gauge_set_value(chassis_left_speed_gauge, 0, fabs(chassis_left_speed));
+		lv_gauge_set_value(chassis_right_speed_gauge, 0, fabs(chassis_right_speed));
+
+		std::string chassis_left_speed_str =
+			std::to_string(chassis_left_speed) + " RPM\n" + std::to_string(chassis_left_pos) + " DEG\n";
+		std::string chassis_right_speed_str =
+			std::to_string(chassis_right_speed) + " RPM\n" + std::to_string(chassis_right_pos) + " DEG\n";
+
+		lv_label_set_text(chassis_left_label, chassis_left_speed_str.c_str());
+		lv_label_set_text(chassis_right_label, chassis_right_speed_str.c_str());
+
 		std::string text = "front left motor: " + std::to_string(front_left->getPosition()) + "\n" +
 				   "front right motor: " + std::to_string(front_right->getPosition()) + "\n" +
 				   "back left motor: " + std::to_string(back_left->getPosition()) + "\n" +
@@ -57,7 +81,7 @@ void
 switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
 {
 	if (master.get_digital_new_press(left)) {
-		if (current_tab > DIAGNOSTIC_TAB)
+		if (current_tab > CHASSIS_TAB)
 			current_tab--;
 		else
 			current_tab = LOG_TAB;
@@ -67,10 +91,13 @@ switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right
 		if (current_tab < LOG_TAB)
 			current_tab++;
 		else
-			current_tab = DIAGNOSTIC_TAB;
+			current_tab = CHASSIS_TAB;
 	}
 
 	switch (current_tab) {
+	case CHASSIS_TAB:
+		lv_tabview_set_tab_act(tabview, CHASSIS_TAB, false);
+		break;
 	case DIAGNOSTIC_TAB:
 		lv_tabview_set_tab_act(tabview, DIAGNOSTIC_TAB, false);
 		break;
@@ -87,6 +114,20 @@ void
 init(void)
 {
 	tabview = lv_tabview_create(lv_scr_act(), NULL);
+
+	chassis_tab = lv_tabview_add_tab(tabview, "Chassis");
+
+	chassis_left_speed_gauge = lv_gauge_create(chassis_tab, NULL);
+	lv_obj_set_size(chassis_left_speed_gauge, 180, 150);
+	lv_obj_align(chassis_left_speed_gauge, NULL, LV_ALIGN_IN_LEFT_MID, 20, 0);
+	chassis_left_label = lv_label_create(chassis_tab, NULL);
+	lv_obj_align(chassis_left_label, NULL, LV_ALIGN_CENTER, -150, 50);
+
+	chassis_right_speed_gauge = lv_gauge_create(chassis_tab, NULL);
+	lv_obj_set_size(chassis_right_speed_gauge, 180, 150);
+	lv_obj_align(chassis_right_speed_gauge, NULL, LV_ALIGN_IN_RIGHT_MID, -20, 0);
+	chassis_right_label = lv_label_create(chassis_tab, NULL);
+	lv_obj_align(chassis_right_label, NULL, LV_ALIGN_CENTER, 90, 50);
 
 	diagnostic_tab = lv_tabview_add_tab(tabview, "Diagnostic");
 	diagnostic_label = lv_label_create(diagnostic_tab, NULL);
