@@ -51,6 +51,8 @@ int
 gui_task(void)
 {
 	for (;;) {
+		/*            CHASSIS TAB            */
+
 		double chassis_left_speed = (front_left->getActualVelocity() + back_left->getActualVelocity()) / 2;
 		double chassis_right_speed = (front_right->getActualVelocity() + back_right->getActualVelocity()) / 2;
 
@@ -68,6 +70,8 @@ gui_task(void)
 		lv_label_set_text(chassis_left_label, chassis_left_speed_str.c_str());
 		lv_label_set_text(chassis_right_label, chassis_right_speed_str.c_str());
 
+		/*            INTAKE TAB            */
+
 		double intake_front_speed = (left_intake->getActualVelocity() + right_intake->getActualVelocity()) / 2;
 		double intake_internal_speed =
 			(top_intake->getActualVelocity() + bottom_intake->getActualVelocity()) / 2;
@@ -83,11 +87,15 @@ gui_task(void)
 		lv_label_set_text(intake_front_label, intake_front_str.c_str());
 		lv_label_set_text(intake_internal_label, intake_internal_str.c_str());
 
+		/*            ODOM TAB            */
+
 		std::string pos = "global_x: " + std::to_string(drive->getState().x.convert(okapi::inch)) + "_in\n" +
 				  "global_y: " + std::to_string(drive->getState().y.convert(okapi::inch)) + "_in\n" +
 				  "global_theta: " + std::to_string(drive->getState().theta.convert(okapi::degree)) +
 				  "_deg\n";
 		lv_label_set_text(odom_label, pos.c_str());
+
+		/*            HEALTH TAB            */
 
 		std::string chassis_health_str = "Chassis\n\nfront left: " + checkhealth::motor(front_left) +
 						 "\n" + "front right: " + checkhealth::motor(front_right) +
@@ -108,6 +116,8 @@ gui_task(void)
 			+ "usd: " + checkhealth::usd();
 
 		lv_label_set_text(core_health_label, core_health_str.c_str());
+
+		/*            LOG TAB            */
 
 		lv_label_set_text(log_stream, logger::ebuf());
 
@@ -154,7 +164,11 @@ switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right
 void
 init(void)
 {
+	/*            MAIN TAB            */
+
 	tabview = lv_tabview_create(lv_scr_act(), NULL);
+
+	/*            CHASSIS TAB            */
 
 	chassis_tab = lv_tabview_add_tab(tabview, "chassis");
 
@@ -169,6 +183,8 @@ init(void)
 	lv_obj_align(chassis_right_speed_gauge, NULL, LV_ALIGN_IN_RIGHT_MID, -20, 0);
 	chassis_right_label = lv_label_create(chassis_tab, NULL);
 	lv_obj_align(chassis_right_label, NULL, LV_ALIGN_CENTER, 90, 50);
+
+	/*            INTAKE TAB            */
 
 	intake_tab = lv_tabview_add_tab(tabview, "intake");
 
@@ -186,8 +202,12 @@ init(void)
 	intake_internal_label = lv_label_create(intake_tab, NULL);
 	lv_obj_align(intake_internal_label, NULL, LV_ALIGN_CENTER, 90, 50);
 
+	/*            ODOM TAB            */
+
 	odom_tab = lv_tabview_add_tab(tabview, "odom");
 	odom_label = lv_label_create(odom_tab, NULL);
+
+	/*            HEALTH TAB            */
 
 	health_tab = lv_tabview_add_tab(tabview, "health");
 
@@ -200,8 +220,12 @@ init(void)
 	core_health_label = lv_label_create(health_tab, NULL);
 	lv_obj_align(core_health_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
+	/*            LOG TAB            */
+
 	log_tab = lv_tabview_add_tab(tabview, "log");
 	log_stream = lv_label_create(log_tab, NULL);
+
+	/*            TASK            */
 
 	if (!guiTask)
 		guiTask = std::make_shared<pros::Task>(gui_task, "gui task (xenon)");
