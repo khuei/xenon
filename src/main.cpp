@@ -62,7 +62,7 @@ opcontrol(void)
 		}
 
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
-			switch(gui::started) {
+			switch (gui::started) {
 			case false:
 				gui::init();
 				break;
@@ -71,6 +71,9 @@ opcontrol(void)
 				break;
 			}
 		}
+
+		if (gui::started)
+			gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
 
 		pros::delay(10);
 	}

@@ -4,9 +4,16 @@
 
 #include "gui.h"
 #include "logger.h"
-#include "port.h"
 
 namespace gui {
+
+enum gui_tab {
+	DIAGNOSTIC_TAB,
+	ODOM_TAB,
+	LOG_TAB,
+};
+
+int current_tab = 0;
 
 lv_obj_t *tabview;
 
@@ -35,13 +42,44 @@ gui_task(void)
 		lv_label_set_text(diagnostic_label, text.c_str());
 
 		std::string pos = "global_x: " + std::to_string(drive->getState().x.convert(okapi::inch)) + "_in\n" +
-		                  "global_y: " + std::to_string(drive->getState().y.convert(okapi::inch)) + "_in\n" +
-		                  "global_theta: " + std::to_string(drive->getState().theta.convert(okapi::degree)) + "_deg\n";
+				  "global_y: " + std::to_string(drive->getState().y.convert(okapi::inch)) + "_in\n" +
+				  "global_theta: " + std::to_string(drive->getState().theta.convert(okapi::degree)) +
+				  "_deg\n";
 		lv_label_set_text(odom_label, pos.c_str());
 
 		lv_label_set_text(log_stream, logger::ebuf());
 
 		pros::delay(1000);
+	}
+}
+
+void
+switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
+{
+	if (master.get_digital_new_press(left)) {
+		if (current_tab > DIAGNOSTIC_TAB)
+			current_tab--;
+		else
+			current_tab = LOG_TAB;
+	}
+
+	if (master.get_digital_new_press(right)) {
+		if (current_tab < LOG_TAB)
+			current_tab++;
+		else
+			current_tab = DIAGNOSTIC_TAB;
+	}
+
+	switch (current_tab) {
+	case DIAGNOSTIC_TAB:
+		lv_tabview_set_tab_act(tabview, DIAGNOSTIC_TAB, false);
+		break;
+	case ODOM_TAB:
+		lv_tabview_set_tab_act(tabview, ODOM_TAB, false);
+		break;
+	case LOG_TAB:
+		lv_tabview_set_tab_act(tabview, LOG_TAB, false);
+		break;
 	}
 }
 
