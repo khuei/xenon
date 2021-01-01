@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "okapi/api.hpp"
+
 #include "util.h"
 
 namespace util {
