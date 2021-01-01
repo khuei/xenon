@@ -11,8 +11,8 @@ namespace gui {
 enum gui_tab {
 	CHASSIS_TAB,
 	INTAKE_TAB,
-	DIAGNOSTIC_TAB,
 	ODOM_TAB,
+	HEALTH_TAB,
 	LOG_TAB,
 };
 
@@ -32,7 +32,7 @@ lv_obj_t *intake_internal_gauge;
 lv_obj_t *intake_front_label;
 lv_obj_t *intake_internal_label;
 
-lv_obj_t *diagnostic_tab;
+lv_obj_t *health_tab;
 lv_obj_t *chassis_health_label;
 lv_obj_t *intake_health_label;
 lv_obj_t *core_health_label;
@@ -139,11 +139,11 @@ switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right
 	case INTAKE_TAB:
 		lv_tabview_set_tab_act(tabview, INTAKE_TAB, false);
 		break;
-	case DIAGNOSTIC_TAB:
-		lv_tabview_set_tab_act(tabview, DIAGNOSTIC_TAB, false);
-		break;
 	case ODOM_TAB:
 		lv_tabview_set_tab_act(tabview, ODOM_TAB, false);
+		break;
+	case HEALTH_TAB:
+		lv_tabview_set_tab_act(tabview, HEALTH_TAB, false);
 		break;
 	case LOG_TAB:
 		lv_tabview_set_tab_act(tabview, LOG_TAB, false);
@@ -156,7 +156,7 @@ init(void)
 {
 	tabview = lv_tabview_create(lv_scr_act(), NULL);
 
-	chassis_tab = lv_tabview_add_tab(tabview, "Chassis");
+	chassis_tab = lv_tabview_add_tab(tabview, "chassis");
 
 	chassis_left_speed_gauge = lv_gauge_create(chassis_tab, NULL);
 	lv_obj_set_size(chassis_left_speed_gauge, 180, 150);
@@ -170,7 +170,7 @@ init(void)
 	chassis_right_label = lv_label_create(chassis_tab, NULL);
 	lv_obj_align(chassis_right_label, NULL, LV_ALIGN_CENTER, 90, 50);
 
-	intake_tab = lv_tabview_add_tab(tabview, "Intake");
+	intake_tab = lv_tabview_add_tab(tabview, "intake");
 
 	intake_front_gauge = lv_gauge_create(intake_tab, NULL);
 	lv_gauge_set_range(intake_front_gauge, 0, 200);
@@ -186,21 +186,21 @@ init(void)
 	intake_internal_label = lv_label_create(intake_tab, NULL);
 	lv_obj_align(intake_internal_label, NULL, LV_ALIGN_CENTER, 90, 50);
 
-	odom_tab = lv_tabview_add_tab(tabview, "Odometry");
+	odom_tab = lv_tabview_add_tab(tabview, "odom");
 	odom_label = lv_label_create(odom_tab, NULL);
 
-	diagnostic_tab = lv_tabview_add_tab(tabview, "Diagnostic");
+	health_tab = lv_tabview_add_tab(tabview, "health");
 
-	chassis_health_label = lv_label_create(diagnostic_tab, NULL);
+	chassis_health_label = lv_label_create(health_tab, NULL);
 	lv_obj_align(chassis_health_label, NULL, LV_ALIGN_CENTER, -200, 0);
 
-	intake_health_label = lv_label_create(diagnostic_tab, NULL);
+	intake_health_label = lv_label_create(health_tab, NULL);
 	lv_obj_align(intake_health_label, NULL, LV_ALIGN_CENTER, -35, 0);
 
-	core_health_label = lv_label_create(diagnostic_tab, NULL);
+	core_health_label = lv_label_create(health_tab, NULL);
 	lv_obj_align(core_health_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
-	log_tab = lv_tabview_add_tab(tabview, "Log");
+	log_tab = lv_tabview_add_tab(tabview, "log");
 	log_stream = lv_label_create(log_tab, NULL);
 
 	if (!guiTask)
