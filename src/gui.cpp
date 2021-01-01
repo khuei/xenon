@@ -236,6 +236,7 @@ init(void)
 	log_stream = lv_label_create(log_tab, NULL);
 
 	logger::elog("gui: create log tab");
+	lv_label_set_long_mode(log_stream, LV_LABEL_LONG_SCROLL);
 
 	/*            TASK            */
 
