@@ -72,8 +72,10 @@ opcontrol(void)
 			}
 		}
 
-		if (gui::started)
+		if (gui::started) {
 			gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
+			gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
+		}
 
 		pros::delay(10);
 	}
