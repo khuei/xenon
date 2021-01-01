@@ -15,8 +15,8 @@
 void
 initialize(void)
 {
-	gui::init();
 	logger::init();
+	gui::init();
 
 	chassis::init();
 	intake::init();

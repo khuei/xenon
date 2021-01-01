@@ -168,6 +168,8 @@ init(void)
 
 	tabview = lv_tabview_create(lv_scr_act(), NULL);
 
+	logger::elog("gui: create main tab");
+
 	/*            CHASSIS TAB            */
 
 	chassis_tab = lv_tabview_add_tab(tabview, "chassis");
@@ -183,6 +185,8 @@ init(void)
 	lv_obj_align(chassis_right_speed_gauge, NULL, LV_ALIGN_IN_RIGHT_MID, -20, 0);
 	chassis_right_label = lv_label_create(chassis_tab, NULL);
 	lv_obj_align(chassis_right_label, NULL, LV_ALIGN_CENTER, 90, 50);
+
+	logger::elog("gui: create chassis tab");
 
 	/*            INTAKE TAB            */
 
@@ -202,10 +206,14 @@ init(void)
 	intake_internal_label = lv_label_create(intake_tab, NULL);
 	lv_obj_align(intake_internal_label, NULL, LV_ALIGN_CENTER, 90, 50);
 
+	logger::elog("gui: create intake tab");
+
 	/*            ODOM TAB            */
 
 	odom_tab = lv_tabview_add_tab(tabview, "odom");
 	odom_label = lv_label_create(odom_tab, NULL);
+
+	logger::elog("gui: create odom tab");
 
 	/*            HEALTH TAB            */
 
@@ -220,17 +228,24 @@ init(void)
 	core_health_label = lv_label_create(health_tab, NULL);
 	lv_obj_align(core_health_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
+	logger::elog("gui: create health tab");
+
 	/*            LOG TAB            */
 
 	log_tab = lv_tabview_add_tab(tabview, "log");
 	log_stream = lv_label_create(log_tab, NULL);
 
+	logger::elog("gui: create log tab");
+
 	/*            TASK            */
 
-	if (!guiTask)
+	if (!guiTask) {
 		guiTask = std::make_shared<pros::Task>(gui_task, "gui task (xenon)");
-	else
+		logger::elog("gui: create task (xenon)");
+	} else {
 		guiTask->resume();
+		logger::elog("gui: resume task (xenon)");
+	}
 
 	started = true;
 }
@@ -239,8 +254,10 @@ void
 stop(void)
 {
 	lv_obj_clean(lv_scr_act());
+	logger::elog("gui: clean screen");
 
 	guiTask->suspend();
+	logger::elog("gui: suspend task (xenon)");
 
 	started = false;
 }
