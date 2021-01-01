@@ -241,6 +241,7 @@ init(void)
 
 	if (!guiTask) {
 		guiTask = std::make_shared<pros::Task>(gui_task, "gui task (xenon)");
+		guiTask->set_priority(TASK_PRIORITY_MIN);
 		logger::elog("gui: create task (xenon)");
 	} else {
 		guiTask->resume();
