@@ -3,6 +3,7 @@
 #include "pros/rtos.hpp"
 
 #include "gui.h"
+#include "checkhealth.h"
 #include "logger.h"
 
 namespace gui {
@@ -32,7 +33,9 @@ lv_obj_t *intake_front_label;
 lv_obj_t *intake_internal_label;
 
 lv_obj_t *diagnostic_tab;
-lv_obj_t *diagnostic_label;
+lv_obj_t *chassis_health_label;
+lv_obj_t *intake_health_label;
+lv_obj_t *core_health_label;
 
 lv_obj_t *odom_tab;
 lv_obj_t *odom_label;
@@ -66,31 +69,45 @@ gui_task(void)
 		lv_label_set_text(chassis_right_label, chassis_right_speed_str.c_str());
 
 		double intake_front_speed = (left_intake->getActualVelocity() + right_intake->getActualVelocity()) / 2;
-		double intake_internal_speed = (top_intake->getActualVelocity() + bottom_intake->getActualVelocity()) / 2;
+		double intake_internal_speed =
+			(top_intake->getActualVelocity() + bottom_intake->getActualVelocity()) / 2;
 
 		double intake_front_pos = (left_intake->getPosition() + right_intake->getPosition()) / 2;
 		double intake_internal_pos = (top_intake->getPosition() + bottom_intake->getPosition()) / 2;
 
 		std::string intake_front_str =
 			std::to_string(intake_front_speed) + " RPM\n" + std::to_string(intake_front_pos) + " DEG\n";
-		std::string intake_internal_str =
-			std::to_string(intake_internal_speed) + " RPM\n" + std::to_string(intake_internal_pos) + " DEG\n";
+		std::string intake_internal_str = std::to_string(intake_internal_speed) + " RPM\n" +
+						  std::to_string(intake_internal_pos) + " DEG\n";
 
 		lv_label_set_text(intake_front_label, intake_front_str.c_str());
 		lv_label_set_text(intake_internal_label, intake_internal_str.c_str());
-
-		std::string text = "front left motor: " + std::to_string(front_left->getPosition()) + "\n" +
-				   "front right motor: " + std::to_string(front_right->getPosition()) + "\n" +
-				   "back left motor: " + std::to_string(back_left->getPosition()) + "\n" +
-				   "back right motor: " + std::to_string(back_right->getPosition()) + "\n" +
-				   "inertial sensor: " + std::to_string(imu->get()) + "\n";
-		lv_label_set_text(diagnostic_label, text.c_str());
 
 		std::string pos = "global_x: " + std::to_string(drive->getState().x.convert(okapi::inch)) + "_in\n" +
 				  "global_y: " + std::to_string(drive->getState().y.convert(okapi::inch)) + "_in\n" +
 				  "global_theta: " + std::to_string(drive->getState().theta.convert(okapi::degree)) +
 				  "_deg\n";
 		lv_label_set_text(odom_label, pos.c_str());
+
+		std::string chassis_health_str = "Chassis\n\nfront left: " + checkhealth::motor(front_left) +
+						 "\n" + "front right: " + checkhealth::motor(front_right) +
+						 "\n" + "back left: " + checkhealth::motor(back_left) +
+						 "\n" + "back right: " + checkhealth::motor(back_right);
+
+		lv_label_set_text(chassis_health_label, chassis_health_str.c_str());
+
+		std::string intake_health_str = "Intake\n\nleft: " + checkhealth::motor(left_intake) +
+						 "\n" + "right: " + checkhealth::motor(right_intake) +
+						 "\n" + "top: " + checkhealth::motor(top_intake) +
+						 "\n" + "bot: " + checkhealth::motor(bottom_intake);
+
+		lv_label_set_text(intake_health_label, intake_health_str.c_str());
+
+		std::string core_health_str = "Core\n\ncontroller: " + checkhealth::controller(master) + "\n"
+			+ "battery: " + checkhealth::battery() + "\n"
+			+ "usd: " + checkhealth::usd();
+
+		lv_label_set_text(core_health_label, core_health_str.c_str());
 
 		lv_label_set_text(log_stream, logger::ebuf());
 
@@ -169,11 +186,19 @@ init(void)
 	intake_internal_label = lv_label_create(intake_tab, NULL);
 	lv_obj_align(intake_internal_label, NULL, LV_ALIGN_CENTER, 90, 50);
 
-	diagnostic_tab = lv_tabview_add_tab(tabview, "Diagnostic");
-	diagnostic_label = lv_label_create(diagnostic_tab, NULL);
-
 	odom_tab = lv_tabview_add_tab(tabview, "Odometry");
 	odom_label = lv_label_create(odom_tab, NULL);
+
+	diagnostic_tab = lv_tabview_add_tab(tabview, "Diagnostic");
+
+	chassis_health_label = lv_label_create(diagnostic_tab, NULL);
+	lv_obj_align(chassis_health_label, NULL, LV_ALIGN_CENTER, -200, 0);
+
+	intake_health_label = lv_label_create(diagnostic_tab, NULL);
+	lv_obj_align(intake_health_label, NULL, LV_ALIGN_CENTER, -35, 0);
+
+	core_health_label = lv_label_create(diagnostic_tab, NULL);
+	lv_obj_align(core_health_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
 	log_tab = lv_tabview_add_tab(tabview, "Log");
 	log_stream = lv_label_create(log_tab, NULL);

@@ -1,6 +1,8 @@
 #ifndef CHECKHEALTH
 #define CHECKHEALTH
 
+#include "okapi/api.hpp"
+
 namespace checkhealth {
 
 std::string battery(void);
