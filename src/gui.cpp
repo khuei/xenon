@@ -262,6 +262,7 @@ init(void)
 	/*            CHASSIS TAB            */
 
 	chassis_tab = lv_tabview_add_tab(tabview, "chassis");
+	lv_page_set_sb_mode(chassis_tab, LV_SB_MODE_OFF);
 
 	chassis_left_speed_gauge = lv_gauge_create(chassis_tab, NULL);
 	lv_gauge_set_range(chassis_left_speed_gauge, 0, 200);
@@ -282,6 +283,7 @@ init(void)
 	/*            CHASSIS GRAPH TAB            */
 
 	chassis_graph_tab = lv_tabview_add_tab(tabview, "graph");
+	lv_page_set_sb_mode(chassis_graph_tab, LV_SB_MODE_OFF);
 
 	chassis_chart = lv_chart_create(chassis_graph_tab, NULL);
 	lv_chart_set_type(chassis_chart, LV_CHART_TYPE_LINE);
@@ -306,6 +308,7 @@ init(void)
 	/*            INTAKE TAB            */
 
 	intake_tab = lv_tabview_add_tab(tabview, "intake");
+	lv_page_set_sb_mode(intake_tab, LV_SB_MODE_OFF);
 
 	intake_front_gauge = lv_gauge_create(intake_tab, NULL);
 	lv_gauge_set_range(intake_front_gauge, 0, 200);
@@ -326,6 +329,7 @@ init(void)
 	/*            INTAKE GRAPH TAB            */
 
 	intake_graph_tab = lv_tabview_add_tab(tabview, "graph");
+	lv_page_set_sb_mode(intake_graph_tab, LV_SB_MODE_OFF);
 
 	intake_chart = lv_chart_create(intake_graph_tab, NULL);
 	lv_chart_set_type(intake_chart, LV_CHART_TYPE_LINE);
@@ -359,6 +363,7 @@ init(void)
 	/*            HEALTH TAB            */
 
 	health_tab = lv_tabview_add_tab(tabview, "health");
+	lv_page_set_sb_mode(health_tab, LV_SB_MODE_OFF);
 
 	chassis_health_label = lv_label_create(health_tab, NULL);
 	lv_obj_align(chassis_health_label, NULL, LV_ALIGN_CENTER, -200, 0);
@@ -375,6 +380,7 @@ init(void)
 
 	log_tab = lv_tabview_add_tab(tabview, "log");
 	log_stream = lv_label_create(log_tab, NULL);
+	lv_page_set_sb_mode(log_tab, LV_SB_MODE_OFF);
 
 	logger::elog("gui: create log tab");
 	lv_label_set_long_mode(log_stream, LV_LABEL_LONG_SCROLL);
