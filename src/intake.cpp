@@ -3,6 +3,14 @@
 
 namespace intake {
 
+double accel_step = 5;
+
+double top_speed = 0;
+double bottom_speed = 0;
+
+double left_speed = 0;
+double right_speed = 0;
+
 void
 reset(void)
 {
@@ -22,26 +30,30 @@ set_brake(okapi::AbstractMotor::brakeMode brake_mode)
 }
 
 void
-run_front(double speed)
+run_front(double max_speed)
 {
-	left_intake->moveVelocity(speed);
-	right_intake->moveVelocity(speed);
+	left_speed = util::slew(&left_speed, accel_step, max_speed);
+	right_speed = util::slew(&right_speed, accel_step, max_speed);
+
+	left_intake->moveVelocity(left_speed);
+	right_intake->moveVelocity(right_speed);
 }
 
 void
-run_internal(double speed)
+run_internal(double max_speed)
 {
-	top_intake->moveVelocity(speed);
-	bottom_intake->moveVelocity(speed);
+	top_speed = util::slew(&top_speed, accel_step, max_speed);
+	bottom_speed = util::slew(&bottom_speed, accel_step, max_speed);
+
+	top_intake->moveVelocity(top_speed);
+	bottom_intake->moveVelocity(bottom_speed);
 }
 
 void
 run_both(double speed)
 {
-	left_intake->moveVelocity(speed);
-	right_intake->moveVelocity(speed);
-	top_intake->moveVelocity(speed);
-	bottom_intake->moveVelocity(speed);
+	run_front(speed);
+	run_internal(speed);
 }
 
 void
