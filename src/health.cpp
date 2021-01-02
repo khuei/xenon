@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "checkhealth.h"
+#include "health.h"
 
 namespace checkhealth {
 

@@ -3,7 +3,7 @@
 #include "pros/rtos.hpp"
 
 #include "gui.h"
-#include "checkhealth.h"
+#include "health.h"
 #include "logger.h"
 
 namespace gui {
