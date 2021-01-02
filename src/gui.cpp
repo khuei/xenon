@@ -264,12 +264,14 @@ init(void)
 	chassis_tab = lv_tabview_add_tab(tabview, "chassis");
 
 	chassis_left_speed_gauge = lv_gauge_create(chassis_tab, NULL);
+	lv_gauge_set_range(chassis_left_speed_gauge, 0, 200);
 	lv_obj_set_size(chassis_left_speed_gauge, 180, 150);
 	lv_obj_align(chassis_left_speed_gauge, NULL, LV_ALIGN_IN_LEFT_MID, 20, 0);
 	chassis_left_label = lv_label_create(chassis_tab, NULL);
 	lv_obj_align(chassis_left_label, NULL, LV_ALIGN_CENTER, -150, 50);
 
 	chassis_right_speed_gauge = lv_gauge_create(chassis_tab, NULL);
+	lv_gauge_set_range(chassis_right_speed_gauge, 0, 200);
 	lv_obj_set_size(chassis_right_speed_gauge, 180, 150);
 	lv_obj_align(chassis_right_speed_gauge, NULL, LV_ALIGN_IN_RIGHT_MID, -20, 0);
 	chassis_right_label = lv_label_create(chassis_tab, NULL);
