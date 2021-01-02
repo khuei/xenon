@@ -1,4 +1,5 @@
 #include "intake.h"
+#include "util.h"
 #include "logger.h"
 
 namespace intake {
