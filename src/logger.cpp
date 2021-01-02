@@ -8,6 +8,18 @@
 
 namespace logger {
 
+const char *
+logfile(void)
+{
+	const char *name;
+	if (pros::usd::is_installed())
+		name = "/usd/event.log";
+	else
+		name = "/ser/sout";
+
+	return name;
+}
+
 char *
 ebuf(void)
 {
@@ -15,7 +27,7 @@ ebuf(void)
 	double length;
 	char *buffer;
 
-	stream = fopen("/usd/event.log", "r");
+	stream = fopen(logfile(), "r");
 
 	if (stream) {
 		fseek(stream, 0L, SEEK_END);
@@ -40,7 +52,7 @@ elog(const char *str)
 	std::uint32_t minute = second / 60;
 	std::uint32_t hour = minute / 60;
 
-	FILE *event_log = fopen("/usd/event.log", "a");
+	FILE *event_log = fopen(logfile(), "a");
 	fprintf(event_log, "[%02ld:%02ld:%02ld] %s\n", hour, minute, second, str);
 	fclose(event_log);
 }
@@ -48,8 +60,8 @@ elog(const char *str)
 void
 init(void)
 {
-	fclose(fopen("/usd/event.log", "w"));
-	logger::elog("logger: clear /usd/event.log");
+	fclose(fopen(logfile(), "w"));
+	logger::elog("logger: clear log buffer");
 
 	okapi::Logger::setDefaultLogger(okapi_logger);
 	logger::elog("logger: set okapi_logger as default logger");

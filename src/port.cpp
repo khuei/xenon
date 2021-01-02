@@ -1,4 +1,5 @@
 #include "port.h"
+#include "logger.h"
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
@@ -6,7 +7,7 @@ std::shared_ptr<okapi::IMU> imu = std::make_shared<okapi::IMU>(5, okapi::IMUAxes
 
 std::shared_ptr<okapi::Logger> okapi_logger =
 	std::make_shared<okapi::Logger>(okapi::TimeUtilFactory::createDefault().getTimer(),
-					"/usd/event.log",
+					logger::logfile(),
 					okapi::Logger::LogLevel::debug);
 
 std::shared_ptr<okapi::Motor> front_left = std::make_shared<okapi::Motor>(1,
