@@ -86,6 +86,9 @@ gui_task(void)
 		double intake_internal_speed =
 			(top_intake->getActualVelocity() + bottom_intake->getActualVelocity()) / 2;
 
+		lv_gauge_set_value(intake_front_gauge, 0, fabs(intake_front_speed));
+		lv_gauge_set_value(intake_internal_gauge, 0, fabs(intake_internal_speed));
+
 		double intake_front_pos = (left_intake->getPosition() + right_intake->getPosition()) / 2;
 		double intake_internal_pos = (top_intake->getPosition() + bottom_intake->getPosition()) / 2;
 
