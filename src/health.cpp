@@ -23,7 +23,7 @@ controller(pros::Controller controller)
 std::string
 motor(std::shared_ptr<okapi::Motor> motor)
 {
-	if (motor->isOverCurrent() == 0 && motor->isOverTemp() == 0)
+	if (!motor->isOverCurrent() && !motor->isOverTemp())
 		return "OK";
 	else
 		return "FAILED";
