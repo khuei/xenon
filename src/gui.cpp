@@ -32,7 +32,8 @@ lv_obj_t *chassis_graph_tab;
 lv_obj_t *chassis_chart;
 lv_obj_t *chassis_chart_label;
 lv_chart_series_t *chassis_max_speed;
-lv_chart_series_t *chassis_current_speed;
+lv_chart_series_t *chassis_left_current_speed;
+lv_chart_series_t *chassis_right_current_speed;
 
 lv_obj_t *intake_tab;
 lv_obj_t *intake_front_gauge;
@@ -90,9 +91,8 @@ gui_task(void)
 		/*            CHASSIS GRAPH TAB            */
 
 		lv_chart_set_next(chassis_chart, chassis_max_speed, 200);
-		lv_chart_set_next(chassis_chart,
-				  chassis_current_speed,
-				  fabs((chassis_left_speed + chassis_right_speed) / 2));
+		lv_chart_set_next(chassis_chart, chassis_left_current_speed, fabs(chassis_left_speed));
+		lv_chart_set_next(chassis_chart, chassis_right_current_speed, fabs(chassis_right_speed));
 
 		/*            INTAKE TAB            */
 
@@ -286,13 +286,15 @@ init(void)
 	lv_obj_set_size(chassis_chart, 700, 140);
 
 	chassis_max_speed = lv_chart_add_series(chassis_chart, LV_COLOR_RED);
-	chassis_current_speed = lv_chart_add_series(chassis_chart, LV_COLOR_LIME);
+	chassis_left_current_speed = lv_chart_add_series(chassis_chart, LV_COLOR_LIME);
+	chassis_right_current_speed = lv_chart_add_series(chassis_chart, LV_COLOR_CYAN);
 
 	chassis_chart_label = lv_label_create(chassis_chart, NULL);
 	lv_label_set_recolor(chassis_chart_label, true);
 	lv_label_set_text(chassis_chart_label,
 			  "#ff0000 max_speed#\n"
-			  "#00ff00 current_speed#\n");
+			  "#00ff00 left_speed#\n"
+			  "#00ffff right_speed#\n");
 	lv_obj_align(chassis_chart_label, NULL, LV_ALIGN_CENTER, -120, 50);
 
 	logger::elog("gui: create chassis graph");
