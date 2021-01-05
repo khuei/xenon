@@ -66,6 +66,7 @@ std::shared_ptr<pros::Task> guiTask;
 int
 gui_task(void)
 {
+	std::uint32_t now = pros::millis();
 	for (;;) {
 		/*            CHASSIS TAB            */
 
@@ -155,7 +156,7 @@ gui_task(void)
 
 		lv_label_set_text(log_stream, logger::ebuf());
 
-		pros::delay(100);
+		pros::Task::delay_until(&now, 100);
 	}
 }
 

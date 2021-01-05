@@ -25,6 +25,7 @@ initialize(void)
 void
 opcontrol(void)
 {
+	std::uint32_t now = pros::millis();
 	for (;;) {
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A) && !pros::competition::is_connected())
 			autonomous();
@@ -77,6 +78,6 @@ opcontrol(void)
 			gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
 		}
 
-		pros::delay(10);
+		pros::Task::delay_until(&now, 10);
 	}
 }
