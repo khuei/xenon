@@ -295,7 +295,7 @@ init(void)
 			  "#ff0000 max_speed#\n"
 			  "#00ff00 left_speed#\n"
 			  "#00ffff right_speed#\n");
-	lv_obj_align(chassis_chart_label, NULL, LV_ALIGN_CENTER, -120, 50);
+	lv_obj_align(chassis_chart_label, NULL, LV_ALIGN_CENTER, -130, 40);
 
 	logger::elog("gui: create chassis graph");
 
@@ -343,7 +343,7 @@ init(void)
 			  "#ff0000 max_speed#\n"
 			  "#00ff00 front_speed#\n"
 			  "#00ffff internal_speed\n");
-	lv_obj_align(intake_chart_label, NULL, LV_ALIGN_CENTER, -90, 40);
+	lv_obj_align(intake_chart_label, NULL, LV_ALIGN_CENTER, -120, 40);
 
 	logger::elog("gui: create intake graph");
 
