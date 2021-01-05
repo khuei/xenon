@@ -13,6 +13,16 @@ double left_speed = 0;
 double right_speed = 0;
 
 void
+tuner(pros::controller_digital_e_t increase, pros::controller_digital_e_t decrease)
+{
+	master.print(2, 0, "accel_step: %f", accel_step);
+	if (master.get_digital_new_press(increase))
+		accel_step += 1;
+	if (master.get_digital_new_press(decrease))
+		accel_step -= 1;
+}
+
+void
 reset(void)
 {
 	left_intake->tarePosition();

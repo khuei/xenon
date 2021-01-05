@@ -62,6 +62,9 @@ opcontrol(void)
 			break;
 		}
 
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X))
+			intake::tuner(pros::E_CONTROLLER_DIGITAL_UP, pros::E_CONTROLLER_DIGITAL_DOWN);
+		
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
 			switch (gui::started) {
 			case false:
