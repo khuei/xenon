@@ -349,8 +349,8 @@ init(void)
 	lv_label_set_recolor(intake_chart_label, true);
 	lv_label_set_text(intake_chart_label,
 			  "#ff0000 max_speed#\n"
-			  "#00ff00 front_current_speed#\n"
-			  "#00ffff internal_current_speed\n");
+			  "#00ff00 front_speed#\n"
+			  "#00ffff internal_speed\n");
 	lv_obj_align(intake_chart_label, NULL, LV_ALIGN_CENTER, -90, 40);
 
 	logger::elog("gui: create intake graph");
