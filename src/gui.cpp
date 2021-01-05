@@ -17,16 +17,6 @@ enum theme {
 	LV_THEME_ZEN,
 };
 
-enum tab {
-	CHASSIS_TAB,
-	CHASSIS_GRAPH_TAB,
-	INTAKE_TAB,
-	INTAKE_GRAPH_TAB,
-	ODOM_TAB,
-	HEALTH_TAB,
-	LOG_TAB,
-};
-
 int current_theme = 0;
 int current_tab = 0;
 
