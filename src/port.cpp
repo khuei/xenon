@@ -58,6 +58,7 @@ std::shared_ptr<okapi::OdomChassisController> drive =
 	okapi::ChassisControllerBuilder()
 		.withMotors(front_left, front_right, back_right, back_left)
 		.withDimensions(okapi::AbstractMotor::gearset::green, { { 3.85_in, 22.75_in }, okapi::imev5GreenTPR })
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
 		.withMaxVelocity(100)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.withOdometry()
@@ -66,6 +67,7 @@ std::shared_ptr<okapi::OdomChassisController> drive =
 std::shared_ptr<okapi::AsyncMotionProfileController> drive_profile =
 	okapi::AsyncMotionProfileControllerBuilder()
 		.withLimits({ 1, 2, 10 })
+		.withTimeUtilFactory(okapi::ConfigurableTimeUtilFactory(std::numeric_limits<double>::max(), 10, 100_ms))
 		.withOutput(drive)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.buildMotionProfileController();
