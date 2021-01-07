@@ -1,10 +1,10 @@
-#ifndef GUI
-#define GUI
+#ifndef DEBUG
+#define DEBUG
 
 #include "display/lvgl.h"
 #include "port.h"
 
-namespace gui {
+namespace debug {
 
 enum tab {
 	CHASSIS_TAB,

@@ -6,7 +6,7 @@
 #include "main.h"
 #include "port.h"
 
-#include "gui.h"
+#include "debug.h"
 #include "logger.h"
 
 #include "intake.h"
@@ -18,7 +18,7 @@ void
 initialize(void)
 {
 	logger::init();
-	gui::init();
+	debug::init();
 
 	chassis::init();
 	intake::init();
@@ -74,19 +74,19 @@ opcontrol(void)
 					   pros::E_CONTROLLER_DIGITAL_DOWN);
 
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
-			switch (gui::started) {
+			switch (debug::started) {
 			case false:
-				gui::init();
+				debug::init();
 				break;
 			case true:
-				gui::stop();
+				debug::stop();
 				break;
 			}
 		}
 
-		if (gui::started) {
-			gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
-			gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
+		if (debug::started) {
+			debug::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
+			debug::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
 		}
 
 		pros::Task::delay_until(&now, 10);

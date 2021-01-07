@@ -2,11 +2,11 @@
 
 #include "pros/rtos.hpp"
 
-#include "gui.h"
+#include "debug.h"
 #include "health.h"
 #include "logger.h"
 
-namespace gui {
+namespace debug {
 
 enum theme {
 	LV_THEME_ALIEN,
@@ -61,10 +61,10 @@ lv_obj_t *log_stream;
 
 bool started;
 
-std::shared_ptr<pros::Task> guiTask;
+std::shared_ptr<pros::Task> debugTask;
 
 int
-gui_task(void)
+debug_task(void)
 {
 	std::uint32_t now = pros::millis();
 	for (;;) {
@@ -250,7 +250,7 @@ init(void)
 
 	lv_tabview_set_style(tabview, LV_TABVIEW_STYLE_INDIC, &lv_style_transp);
 
-	logger::elog("gui: create main tab");
+	logger::elog("debug: create main tab");
 
 	/*            CHASSIS TAB            */
 
@@ -271,7 +271,7 @@ init(void)
 	chassis_right_label = lv_label_create(chassis_tab, NULL);
 	lv_obj_align(chassis_right_label, NULL, LV_ALIGN_CENTER, 90, 50);
 
-	logger::elog("gui: create chassis tab");
+	logger::elog("debug: create chassis tab");
 
 	/*            CHASSIS GRAPH TAB            */
 
@@ -298,7 +298,7 @@ init(void)
 			  "#00ffff right_speed#\n");
 	lv_obj_align(chassis_chart_label, NULL, LV_ALIGN_CENTER, -130, 40);
 
-	logger::elog("gui: create chassis graph");
+	logger::elog("debug: create chassis graph");
 
 	/*            INTAKE TAB            */
 
@@ -319,7 +319,7 @@ init(void)
 	intake_internal_label = lv_label_create(intake_tab, NULL);
 	lv_obj_align(intake_internal_label, NULL, LV_ALIGN_CENTER, 90, 50);
 
-	logger::elog("gui: create intake tab");
+	logger::elog("debug: create intake tab");
 
 	/*            INTAKE GRAPH TAB            */
 
@@ -346,14 +346,14 @@ init(void)
 			  "#00ffff internal_speed\n");
 	lv_obj_align(intake_chart_label, NULL, LV_ALIGN_CENTER, -120, 40);
 
-	logger::elog("gui: create intake graph");
+	logger::elog("debug: create intake graph");
 
 	/*            ODOM TAB            */
 
 	odom_tab = lv_tabview_add_tab(tabview, "odom");
 	odom_label = lv_label_create(odom_tab, NULL);
 
-	logger::elog("gui: create odom tab");
+	logger::elog("debug: create odom tab");
 
 	/*            HEALTH TAB            */
 
@@ -369,7 +369,7 @@ init(void)
 	core_health_label = lv_label_create(health_tab, NULL);
 	lv_obj_align(core_health_label, NULL, LV_ALIGN_CENTER, 120, 0);
 
-	logger::elog("gui: create health tab");
+	logger::elog("debug: create health tab");
 
 	/*            LOG TAB            */
 
@@ -377,18 +377,18 @@ init(void)
 	log_stream = lv_label_create(log_tab, NULL);
 	lv_page_set_sb_mode(log_tab, LV_SB_MODE_OFF);
 
-	logger::elog("gui: create log tab");
+	logger::elog("debug: create log tab");
 	lv_label_set_long_mode(log_stream, LV_LABEL_LONG_SCROLL);
 
 	/*            TASK            */
 
-	if (!guiTask) {
-		guiTask = std::make_shared<pros::Task>(gui_task, "gui task (xenon)");
-		guiTask->set_priority(TASK_PRIORITY_MIN);
-		logger::elog("gui: create task (xenon)");
+	if (!debugTask) {
+		debugTask = std::make_shared<pros::Task>(debug_task, "debug task (xenon)");
+		debugTask->set_priority(TASK_PRIORITY_MIN);
+		logger::elog("debug: create task (xenon)");
 	} else {
-		guiTask->resume();
-		logger::elog("gui: resume task (xenon)");
+		debugTask->resume();
+		logger::elog("debug: resume task (xenon)");
 	}
 
 	started = true;
@@ -398,12 +398,12 @@ void
 stop(void)
 {
 	lv_obj_clean(lv_scr_act());
-	logger::elog("gui: clean screen");
+	logger::elog("debug: clean screen");
 
-	guiTask->suspend();
-	logger::elog("gui: suspend task (xenon)");
+	debugTask->suspend();
+	logger::elog("debug: suspend task (xenon)");
 
 	started = false;
 }
 
-} // namespace gui
+} // namespace debug
