@@ -1,5 +1,5 @@
-#ifndef INTAKE
-#define INTAKE
+#ifndef _INTAKE_H_
+#define _INTAKE_H_
 
 #include "port.h"
 

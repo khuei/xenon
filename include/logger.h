@@ -1,5 +1,5 @@
-#ifndef LOGGER
-#define LOGGER
+#ifndef _LOGGER_H_
+#define _LOGGER_H_
 
 namespace logger {
 

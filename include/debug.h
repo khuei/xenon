@@ -1,5 +1,5 @@
-#ifndef DEBUG
-#define DEBUG
+#ifndef _DEBUG_H_
+#define _DEBUG_H_
 
 #include "display/lvgl.h"
 #include "port.h"

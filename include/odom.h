@@ -1,5 +1,5 @@
-#ifndef ODOM
-#define ODOM
+#ifndef _ODOM_H_
+#define _ODOM_H_
 
 #include "port.h"
 

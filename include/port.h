@@ -1,5 +1,5 @@
-#ifndef PORT
-#define PORT
+#ifndef _PORT_H_
+#define _PORT_H_
 
 #include "okapi/api.hpp"
 #include "pros/rtos.hpp"

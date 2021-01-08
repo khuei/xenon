@@ -1,5 +1,5 @@
-#ifndef CHECKHEALTH
-#define CHECKHEALTH
+#ifndef _CHECKHEALTH_H_
+#define _CHECKHEALTH_H_
 
 #include "okapi/api.hpp"
 

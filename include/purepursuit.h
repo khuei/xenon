@@ -1,5 +1,5 @@
-#ifndef PUREPURSUIT
-#define PUREPURSUIT
+#ifndef _PUREPURSUIT_H_
+#define _PUREPURSUIT_H_
 
 #include "port.h"
 
