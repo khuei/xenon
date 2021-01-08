@@ -34,10 +34,12 @@ arcade(void)
 void
 init(void)
 {
-	imu->calibrate();
-	while (imu->isCalibrating())
-		pros::delay(10);
-	logger::elog("imu: calibrated");
+	if (!std::isnan(imu->get())) {
+		imu->calibrate();
+		while (imu->isCalibrating())
+			pros::delay(10);
+		logger::elog("imu: calibrated");
+	}
 
 	chassis::reset();
 	logger::elog("chassis: reset");
