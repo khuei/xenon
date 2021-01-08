@@ -8,6 +8,7 @@
 
 #include "debug.h"
 #include "logger.h"
+#include "gui.h"
 
 #include "intake.h"
 #include "chassis.h"
@@ -86,7 +87,7 @@ opcontrol(void)
 
 		if (debug::started) {
 			debug::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
-			debug::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
+			gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
 		}
 
 		pros::Task::delay_until(&now, 10);
