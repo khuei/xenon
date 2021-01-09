@@ -1,4 +1,5 @@
 #include "port.h"
+#include "config.h"
 #include "logger.h"
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -57,9 +58,10 @@ std::shared_ptr<okapi::Motor> right_intake = std::make_shared<okapi::Motor>(19,
 std::shared_ptr<okapi::OdomChassisController> drive =
 	okapi::ChassisControllerBuilder()
 		.withMotors(front_left, front_right, back_right, back_left)
-		.withDimensions(okapi::AbstractMotor::gearset::green, { { 3.85_in, 22.75_in }, okapi::imev5GreenTPR })
+		.withDimensions(okapi::AbstractMotor::gearset::green,
+				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
 		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
-		.withMaxVelocity(100)
+		.withMaxVelocity(chassis::max_speed)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.withOdometry(okapi::StateMode::CARTESIAN)
 		.buildOdometry();

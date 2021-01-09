@@ -5,6 +5,7 @@
 
 #include "main.h"
 #include "port.h"
+#include "config.h"
 
 #include "debug.h"
 #include "logger.h"
@@ -39,27 +40,27 @@ opcontrol(void)
 		case 0:
 			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
 			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_internal(-200);
+				intake::run_internal(-intake::max_speed);
 			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
 				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_internal(200);
+				intake::run_internal(intake::max_speed);
 			else
 				intake::run_internal(0);
 
 			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
 			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_front(-200);
+				intake::run_front(-intake::max_speed);
 			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
 				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_front(200);
+				intake::run_front(intake::max_speed);
 			else
 				intake::run_front(0);
 			break;
 		case 1:
 			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
-				intake::run_both(-200);
+				intake::run_both(-intake::max_speed);
 			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
-				intake::run_both(200);
+				intake::run_both(intake::max_speed);
 			else
 				intake::run_both(0);
 			break;

@@ -1,10 +1,9 @@
 #include "intake.h"
 #include "util.h"
 #include "logger.h"
+#include "config.h"
 
 namespace intake {
-
-double accel_step = 5;
 
 double top_speed = 0;
 double bottom_speed = 0;
