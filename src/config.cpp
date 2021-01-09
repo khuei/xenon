@@ -266,6 +266,19 @@ enum tuner_mode {
 
 int current_tuner = 0;
 
+enum tab {
+	CHASSIS_TAB,
+	INTAKE_TAB,
+	PUREPURSUIT_TAB,
+};
+
+int current_tab;
+
+lv_obj_t *tabview;
+lv_obj_t *chassis_tab;
+lv_obj_t *intake_tab;
+lv_obj_t *purepursuit_tab;
+
 bool started;
 
 void
@@ -310,6 +323,36 @@ switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right
 void
 init(void)
 {
+	/*            MAIN TAB            */
+
+	tabview = lv_tabview_create(lv_scr_act(), NULL);
+
+	lv_tabview_set_style(tabview, LV_TABVIEW_STYLE_INDIC, &lv_style_transp);
+
+	logger::elog("config: create main tab");
+
+	/*            CHASSIS TAB            */
+
+	chassis_tab = lv_tabview_add_tab(tabview, "chassis");
+	lv_page_set_sb_mode(chassis_tab, LV_SB_MODE_OFF);
+
+	logger::elog("config: create chassis tab");
+
+	/*            INTAKE TAB            */
+
+	intake_tab = lv_tabview_add_tab(tabview, "intake");
+	lv_page_set_sb_mode(intake_tab, LV_SB_MODE_OFF);
+
+	logger::elog("config: create intake tab");
+
+	/*            PUREPURSUIT TAB            */
+
+	purepursuit_tab = lv_tabview_add_tab(tabview, "purepursuit");
+	lv_page_set_sb_mode(purepursuit_tab, LV_SB_MODE_OFF);
+
+	logger::elog("config: create purepursuit tab");
+
+	started = true;
 }
 
 void
