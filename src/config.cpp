@@ -266,6 +266,8 @@ enum tuner_mode {
 
 int current_tuner = 0;
 
+bool started;
+
 void
 switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
 {
@@ -298,6 +300,22 @@ switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t rig
 			break;
 		}
 	}
+}
+
+void
+switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
+{
+}
+
+void
+init(void)
+{
+}
+
+void
+stop(void)
+{
+	started = false;
 }
 
 } // namespace tuner

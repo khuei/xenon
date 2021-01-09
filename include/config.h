@@ -58,7 +58,13 @@ void tuner(pros::controller_digital_e_t,
 namespace config {
 
 extern int current_tuner;
+extern bool started;
+
 void switch_tuner(pros::controller_digital_e_t, pros::controller_digital_e_t);
+void switch_tab(pros::controller_digital_e_t, pros::controller_digital_e_t);
+
+void init(void);
+void stop(void);
 
 } // namespace config
 #endif
