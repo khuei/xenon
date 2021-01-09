@@ -318,6 +318,33 @@ switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t rig
 void
 switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
 {
+	if (master.get_digital_new_press(left)) {
+		if (current_tab > CHASSIS_TAB)
+			current_tab--;
+		else
+			current_tab = PUREPURSUIT_TAB;
+	}
+
+	if (master.get_digital_new_press(right)) {
+		if (current_tab < PUREPURSUIT_TAB)
+			current_tab++;
+		else
+			current_tab = CHASSIS_TAB;
+	}
+
+	if (master.get_digital(left) || master.get_digital(right)) {
+		switch (current_tab) {
+		case CHASSIS_TAB:
+			lv_tabview_set_tab_act(tabview, CHASSIS_TAB, false);
+			break;
+		case INTAKE_TAB:
+			lv_tabview_set_tab_act(tabview, INTAKE_TAB, false);
+			break;
+		case PUREPURSUIT_TAB:
+			lv_tabview_set_tab_act(tabview, PUREPURSUIT_TAB, false);
+			break;
+		}
+	}
 }
 
 void
