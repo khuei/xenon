@@ -385,6 +385,9 @@ init(void)
 void
 stop(void)
 {
+	lv_obj_clean(lv_scr_act());
+	logger::elog("config: clean screen");
+
 	started = false;
 }
 
