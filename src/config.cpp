@@ -109,10 +109,9 @@ tuner(pros::controller_digital_e_t left,
 			current_tune_value = MAX_SPEED;
 	}
 
-
 	if (master.get_digital(left) || master.get_digital(right) || master.get_digital(decrease) ||
 	    master.get_digital(increase)) {
-		switch(current_tune_value) {
+		switch (current_tune_value) {
 		case MAX_SPEED:
 			master.print(2, 0, "max_speed: %f", intake::max_speed);
 			if (master.get_digital_new_press(increase))
@@ -275,11 +274,33 @@ enum tab {
 int current_tab;
 
 lv_obj_t *tabview;
+
 lv_obj_t *chassis_tab;
+lv_obj_t *chassis_btnm;
+const char *chassis_btnm_map[8] = { "SPD" SYMBOL_PLUS,	"D_CST" SYMBOL_PLUS,  "T_CST" SYMBOL_PLUS,  "\n",
+				    "SPD" SYMBOL_MINUS, "D_CST" SYMBOL_MINUS, "T_CST" SYMBOL_MINUS, "" };
+lv_obj_t *chassis_label;
+
 lv_obj_t *intake_tab;
+lv_obj_t *intake_btnm;
+const char *intake_btnm_map[6] = { "SPD" SYMBOL_PLUS,  "ACCEL" SYMBOL_PLUS,  "\n",
+				   "SPD" SYMBOL_MINUS, "ACCEL" SYMBOL_MINUS, "" };
+lv_obj_t *intake_label;
+
 lv_obj_t *purepursuit_tab;
+lv_obj_t *purepursuit_btnm;
+const char *purepursuit_btnm_map[20] = {
+	"SPD" SYMBOL_PLUS,     "ACCEL" SYMBOL_PLUS,   "I_RAD" SYMBOL_PLUS,   "O_RAD" SYMBOL_PLUS,   "\n",
+	"SPD" SYMBOL_MINUS,    "ACCEL" SYMBOL_MINUS,  "I_RAD" SYMBOL_MINUS,  "O_RAD" SYMBOL_MINUS,  "\n",
+	"kP_VEL" SYMBOL_PLUS,  "kD_VEL" SYMBOL_PLUS,  "kP_ANG" SYMBOL_PLUS,  "kD_ANG" SYMBOL_PLUS,  "\n",
+	"kP_VEL" SYMBOL_MINUS, "kD_VEL" SYMBOL_MINUS, "kP_ANG" SYMBOL_MINUS, "kD_ANG" SYMBOL_MINUS, ""
+};
+lv_obj_t *purepursuit_misc_label;
+lv_obj_t *purepursuit_pid_label;
 
 bool started;
+
+std::shared_ptr<pros::Task> configTask;
 
 void
 switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
@@ -347,6 +368,126 @@ switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right
 	}
 }
 
+int
+config_task(void)
+{
+	std::uint32_t now = pros::millis();
+	for (;;) {
+		/*            CHASSIS TAB            */
+
+		std::string chassis_label_str = std::to_string(chassis::max_speed) + "         " +
+						std::to_string(chassis::distance_constant.convert(okapi::inch)) +
+						"          " +
+						std::to_string(chassis::turn_constant.convert(okapi::inch));
+		lv_label_set_text(chassis_label, chassis_label_str.c_str());
+
+		/*            INTAKE TAB            */
+
+		std::string intake_label_str =
+			std::to_string(intake::max_speed) + "                    " + std::to_string(intake::accel_step);
+		lv_label_set_text(intake_label, intake_label_str.c_str());
+
+		/*            PUREPURSUIT TAB            */
+
+		std::string purepursuit_misc_label_str =
+			std::to_string(purepursuit::max_speed) + "     " + std::to_string(purepursuit::accel_step) +
+			"     " + std::to_string(purepursuit::inner_radius.convert(okapi::inch)) + "     " +
+			std::to_string(purepursuit::outer_radius.convert(okapi::inch));
+		lv_label_set_text(purepursuit_misc_label, purepursuit_misc_label_str.c_str());
+
+		std::string purepursuit_pid_label_str = std::to_string(purepursuit::kP_vel) + "      " +
+							std::to_string(purepursuit::kD_vel) + "      " +
+							std::to_string(purepursuit::kP_ang) + "      " +
+							std::to_string(purepursuit::kD_ang) + "      ";
+		lv_label_set_text(purepursuit_pid_label, purepursuit_pid_label_str.c_str());
+
+		pros::Task::delay_until(&now, 100);
+	}
+}
+
+lv_res_t
+chassis_btnm_action(lv_obj_t *btnm, const char *label)
+{
+	if (strcmp(label, "SPD" SYMBOL_PLUS) == 0)
+		chassis::max_speed += 2;
+	if (strcmp(label, "SPD" SYMBOL_MINUS) == 0)
+		chassis::max_speed -= 2;
+
+	if (strcmp(label, "D_CST" SYMBOL_PLUS) == 0)
+		chassis::distance_constant += 0.01_in;
+	if (strcmp(label, "D_CST" SYMBOL_MINUS) == 0)
+		chassis::distance_constant -= 0.01_in;
+
+	if (strcmp(label, "T_CST" SYMBOL_PLUS) == 0)
+		chassis::turn_constant += 0.01_in;
+	if (strcmp(label, "T_CST" SYMBOL_MINUS) == 0)
+		chassis::turn_constant -= 0.01_in;
+
+	return LV_RES_OK;
+}
+
+lv_res_t
+intake_btnm_action(lv_obj_t *btnm, const char *label)
+{
+	if (strcmp(label, "SPD" SYMBOL_PLUS) == 0)
+		intake::max_speed += 2;
+	if (strcmp(label, "SPD" SYMBOL_MINUS) == 0)
+		intake::max_speed -= 2;
+
+	if (strcmp(label, "ACCEL" SYMBOL_PLUS) == 0)
+		intake::accel_step += 1;
+	if (strcmp(label, "ACCEL" SYMBOL_MINUS) == 0)
+		intake::accel_step -= 1;
+
+	return LV_RES_OK;
+}
+
+lv_res_t
+purepursuit_btnm_action(lv_obj_t *btnm, const char *label)
+{
+	if (strcmp(label, "SPD" SYMBOL_PLUS) == 0)
+		purepursuit::max_speed += 2;
+	if (strcmp(label, "SPD" SYMBOL_MINUS) == 0)
+		purepursuit::max_speed -= 2;
+
+	if (strcmp(label, "ACCEL" SYMBOL_PLUS) == 0)
+		purepursuit::accel_step += 1;
+	if (strcmp(label, "ACCEL" SYMBOL_MINUS) == 0)
+		purepursuit::accel_step -= 1;
+
+	if (strcmp(label, "I_RAD" SYMBOL_PLUS) == 0)
+		purepursuit::inner_radius += 1_in;
+	if (strcmp(label, "I_RAD" SYMBOL_MINUS) == 0)
+		purepursuit::inner_radius -= 1_in;
+
+	if (strcmp(label, "O_RAD" SYMBOL_PLUS) == 0)
+		purepursuit::outer_radius += 1_in;
+	if (strcmp(label, "O_RAD" SYMBOL_MINUS) == 0)
+		purepursuit::outer_radius -= 1_in;
+
+	if (strcmp(label, "kP_VEL" SYMBOL_PLUS) == 0)
+		purepursuit::kP_vel += 0.001;
+	if (strcmp(label, "kD_VEL" SYMBOL_MINUS) == 0)
+		purepursuit::kD_vel -= 0.001;
+
+	if (strcmp(label, "kD_VEL" SYMBOL_PLUS) == 0)
+		purepursuit::kD_vel += 0.001;
+	if (strcmp(label, "kD_VEL" SYMBOL_MINUS) == 0)
+		purepursuit::kD_vel -= 0.001;
+
+	if (strcmp(label, "kP_ANG" SYMBOL_PLUS) == 0)
+		purepursuit::kP_ang += 0.001;
+	if (strcmp(label, "kD_ANG" SYMBOL_MINUS) == 0)
+		purepursuit::kD_ang -= 0.001;
+
+	if (strcmp(label, "kD_ANG" SYMBOL_PLUS) == 0)
+		purepursuit::kD_ang += 0.001;
+	if (strcmp(label, "kD_ANG" SYMBOL_MINUS) == 0)
+		purepursuit::kD_ang -= 0.001;
+
+	return LV_RES_OK;
+}
+
 void
 init(void)
 {
@@ -363,12 +504,30 @@ init(void)
 	chassis_tab = lv_tabview_add_tab(tabview, "chassis");
 	lv_page_set_sb_mode(chassis_tab, LV_SB_MODE_OFF);
 
+	chassis_btnm = lv_btnm_create(chassis_tab, NULL);
+	lv_btnm_set_map(chassis_btnm, chassis_btnm_map);
+	lv_btnm_set_action(chassis_btnm, chassis_btnm_action);
+	lv_obj_set_size(chassis_btnm, LV_HOR_RES * 0.95, LV_VER_RES * 0.25);
+	lv_obj_align(chassis_btnm, NULL, LV_ALIGN_CENTER, 0, 0);
+
+	chassis_label = lv_label_create(chassis_tab, NULL);
+	lv_obj_align(chassis_label, NULL, LV_ALIGN_IN_LEFT_MID, 40, 4);
+
 	logger::elog("config: create chassis tab");
 
 	/*            INTAKE TAB            */
 
 	intake_tab = lv_tabview_add_tab(tabview, "intake");
 	lv_page_set_sb_mode(intake_tab, LV_SB_MODE_OFF);
+
+	intake_btnm = lv_btnm_create(intake_tab, NULL);
+	lv_btnm_set_map(intake_btnm, intake_btnm_map);
+	lv_btnm_set_action(intake_btnm, intake_btnm_action);
+	lv_obj_set_size(intake_btnm, LV_HOR_RES * 0.95, LV_VER_RES * 0.25);
+	lv_obj_align(intake_btnm, NULL, LV_ALIGN_CENTER, 0, 0);
+
+	intake_label = lv_label_create(intake_tab, NULL);
+	lv_obj_align(intake_label, NULL, LV_ALIGN_IN_LEFT_MID, 70, 4);
 
 	logger::elog("config: create intake tab");
 
@@ -377,7 +536,30 @@ init(void)
 	purepursuit_tab = lv_tabview_add_tab(tabview, "purepursuit");
 	lv_page_set_sb_mode(purepursuit_tab, LV_SB_MODE_OFF);
 
+	purepursuit_btnm = lv_btnm_create(purepursuit_tab, NULL);
+	lv_btnm_set_map(purepursuit_btnm, purepursuit_btnm_map);
+	lv_btnm_set_action(purepursuit_btnm, purepursuit_btnm_action);
+	lv_obj_set_size(purepursuit_btnm, LV_HOR_RES * 0.95, LV_VER_RES * 0.6);
+	lv_obj_align(purepursuit_btnm, NULL, LV_ALIGN_CENTER, 0, 0);
+
+	purepursuit_misc_label = lv_label_create(purepursuit_tab, NULL);
+	lv_obj_align(purepursuit_misc_label, NULL, LV_ALIGN_IN_LEFT_MID, 20, -30);
+
+	purepursuit_pid_label = lv_label_create(purepursuit_tab, NULL);
+	lv_obj_align(purepursuit_pid_label, NULL, LV_ALIGN_IN_LEFT_MID, 20, 40);
+
 	logger::elog("config: create purepursuit tab");
+
+	/*            TASK            */
+
+	if (!configTask) {
+		configTask = std::make_shared<pros::Task>(config_task, "config task (xenon)");
+		configTask->set_priority(TASK_PRIORITY_MIN);
+		logger::elog("config: create task (xenon)");
+	} else {
+		configTask->resume();
+		logger::elog("config: resume task (xenon)");
+	}
 
 	started = true;
 }
@@ -387,6 +569,9 @@ stop(void)
 {
 	lv_obj_clean(lv_scr_act());
 	logger::elog("config: clean screen");
+
+	configTask->suspend();
+	logger::elog("config: suspend task (xenon)");
 
 	started = false;
 }
