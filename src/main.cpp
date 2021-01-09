@@ -20,7 +20,7 @@ void
 initialize(void)
 {
 	logger::init();
-	debug::init();
+	gui::init();
 
 	chassis::init();
 	intake::init();
@@ -92,19 +92,14 @@ opcontrol(void)
 			}
 		}
 
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
-			switch (debug::started) {
-			case false:
-				debug::init();
-				break;
-			case true:
-				debug::stop();
-				break;
-			}
-		}
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+			gui::switch_display(pros::E_CONTROLLER_DIGITAL_UP);
 
-		if (debug::started) {
-			debug::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+			gui::toggle(pros::E_CONTROLLER_DIGITAL_DOWN);
+
+		if (gui::started) {
+			gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
 			gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
 		}
 
