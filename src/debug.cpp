@@ -167,28 +167,30 @@ switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right
 			current_tab = CHASSIS_TAB;
 	}
 
-	switch (current_tab) {
-	case CHASSIS_TAB:
-		lv_tabview_set_tab_act(tabview, CHASSIS_TAB, false);
-		break;
-	case CHASSIS_GRAPH_TAB:
-		lv_tabview_set_tab_act(tabview, CHASSIS_GRAPH_TAB, false);
-		break;
-	case INTAKE_TAB:
-		lv_tabview_set_tab_act(tabview, INTAKE_TAB, false);
-		break;
-	case INTAKE_GRAPH_TAB:
-		lv_tabview_set_tab_act(tabview, INTAKE_GRAPH_TAB, false);
-		break;
-	case ODOM_TAB:
-		lv_tabview_set_tab_act(tabview, ODOM_TAB, false);
-		break;
-	case HEALTH_TAB:
-		lv_tabview_set_tab_act(tabview, HEALTH_TAB, false);
-		break;
-	case LOG_TAB:
-		lv_tabview_set_tab_act(tabview, LOG_TAB, false);
-		break;
+	if (master.get_digital(left) || master.get_digital(right)) {
+		switch (current_tab) {
+		case CHASSIS_TAB:
+			lv_tabview_set_tab_act(tabview, CHASSIS_TAB, false);
+			break;
+		case CHASSIS_GRAPH_TAB:
+			lv_tabview_set_tab_act(tabview, CHASSIS_GRAPH_TAB, false);
+			break;
+		case INTAKE_TAB:
+			lv_tabview_set_tab_act(tabview, INTAKE_TAB, false);
+			break;
+		case INTAKE_GRAPH_TAB:
+			lv_tabview_set_tab_act(tabview, INTAKE_GRAPH_TAB, false);
+			break;
+		case ODOM_TAB:
+			lv_tabview_set_tab_act(tabview, ODOM_TAB, false);
+			break;
+		case HEALTH_TAB:
+			lv_tabview_set_tab_act(tabview, HEALTH_TAB, false);
+			break;
+		case LOG_TAB:
+			lv_tabview_set_tab_act(tabview, LOG_TAB, false);
+			break;
+		}
 	}
 }
 void
