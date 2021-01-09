@@ -7,7 +7,6 @@
 #include "port.h"
 #include "config.h"
 
-#include "debug.h"
 #include "logger.h"
 #include "gui.h"
 
