@@ -67,13 +67,30 @@ opcontrol(void)
 		}
 
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X))
-			intake::tuner(pros::E_CONTROLLER_DIGITAL_UP, pros::E_CONTROLLER_DIGITAL_DOWN);
+			config::switch_tuner(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
 
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B))
-			purepursuit::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
-					   pros::E_CONTROLLER_DIGITAL_RIGHT,
-					   pros::E_CONTROLLER_DIGITAL_UP,
-					   pros::E_CONTROLLER_DIGITAL_DOWN);
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
+			switch (config::current_tuner) {
+			case 0:
+				chassis::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+						   pros::E_CONTROLLER_DIGITAL_RIGHT,
+						   pros::E_CONTROLLER_DIGITAL_UP,
+						   pros::E_CONTROLLER_DIGITAL_DOWN);
+				break;
+			case 1:
+				intake::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+						   pros::E_CONTROLLER_DIGITAL_RIGHT,
+						   pros::E_CONTROLLER_DIGITAL_UP,
+						   pros::E_CONTROLLER_DIGITAL_DOWN);
+				break;
+			case 2:
+				purepursuit::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+						   pros::E_CONTROLLER_DIGITAL_RIGHT,
+						   pros::E_CONTROLLER_DIGITAL_UP,
+						   pros::E_CONTROLLER_DIGITAL_DOWN);
+				break;
+			}
+		}
 
 		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
 			switch (debug::started) {

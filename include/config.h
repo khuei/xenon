@@ -1,5 +1,5 @@
-#ifndef CONFIG
-#define CONFIG
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
 
 #include "port.h"
 
@@ -15,12 +15,22 @@ extern double max_speed;
 extern okapi::QLength distance_constant;
 extern okapi::QLength turn_constant;
 
+void tuner(pros::controller_digital_e_t,
+	   pros::controller_digital_e_t,
+	   pros::controller_digital_e_t,
+	   pros::controller_digital_e_t);
+
 } // namespace chassis
 
 namespace intake {
 
 extern double max_speed;
 extern double accel_step;
+
+void tuner(pros::controller_digital_e_t,
+	   pros::controller_digital_e_t,
+	   pros::controller_digital_e_t,
+	   pros::controller_digital_e_t);
 
 } // namespace intake
 
@@ -38,6 +48,17 @@ extern double kD_vel;
 extern double kP_ang;
 extern double kD_ang;
 
+void tuner(pros::controller_digital_e_t,
+	   pros::controller_digital_e_t,
+	   pros::controller_digital_e_t,
+	   pros::controller_digital_e_t);
+
 } // namespace purepursuit
 
+namespace config {
+
+extern int current_tuner;
+void switch_tuner(pros::controller_digital_e_t, pros::controller_digital_e_t);
+
+} // namespace config
 #endif
