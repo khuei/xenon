@@ -528,6 +528,7 @@ init(void)
 
 	tabview = lv_tabview_create(lv_scr_act(), NULL);
 
+	lv_tabview_set_anim_time(tabview, 0);
 	lv_tabview_set_style(tabview, LV_TABVIEW_STYLE_INDIC, &lv_style_transp);
 
 	logger::elog("config: create main tab");
