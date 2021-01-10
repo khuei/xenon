@@ -22,14 +22,9 @@ enum display {
 
 int current_display = 0;
 
-bool started;
-
 void
 switch_theme(pros::controller_digital_e_t down, pros::controller_digital_e_t up)
 {
-	if (!gui::started)
-		return;
-
 	if (master.get_digital_new_press(down)) {
 		if (current_theme > LV_THEME_ALIEN)
 			current_theme--;
@@ -130,8 +125,6 @@ init(void)
 		debug::init();
 		break;
 	}
-
-	started = true;
 }
 
 void
@@ -143,10 +136,8 @@ opcontrol(void)
 	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
 		gui::toggle(pros::E_CONTROLLER_DIGITAL_DOWN);
 
-	if (gui::started) {
-		gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
-		gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
-	}
+	gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
+	gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
 }
 
 } // namespace gui
