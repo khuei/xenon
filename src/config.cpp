@@ -467,8 +467,8 @@ purepursuit_btnm_action(lv_obj_t *btnm, const char *label)
 
 	if (strcmp(label, "kP_VEL" SYMBOL_PLUS) == 0)
 		purepursuit::kP_vel += 0.001;
-	if (strcmp(label, "kD_VEL" SYMBOL_MINUS) == 0)
-		purepursuit::kD_vel -= 0.001;
+	if (strcmp(label, "kP_VEL" SYMBOL_MINUS) == 0)
+		purepursuit::kP_vel -= 0.001;
 
 	if (strcmp(label, "kD_VEL" SYMBOL_PLUS) == 0)
 		purepursuit::kD_vel += 0.001;
@@ -477,8 +477,8 @@ purepursuit_btnm_action(lv_obj_t *btnm, const char *label)
 
 	if (strcmp(label, "kP_ANG" SYMBOL_PLUS) == 0)
 		purepursuit::kP_ang += 0.001;
-	if (strcmp(label, "kD_ANG" SYMBOL_MINUS) == 0)
-		purepursuit::kD_ang -= 0.001;
+	if (strcmp(label, "kP_ANG" SYMBOL_MINUS) == 0)
+		purepursuit::kP_ang -= 0.001;
 
 	if (strcmp(label, "kD_ANG" SYMBOL_PLUS) == 0)
 		purepursuit::kD_ang += 0.001;
