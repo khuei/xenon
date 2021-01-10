@@ -134,4 +134,19 @@ init(void)
 	started = true;
 }
 
+void
+opcontrol(void)
+{
+	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+		gui::switch_display(pros::E_CONTROLLER_DIGITAL_UP);
+
+	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+		gui::toggle(pros::E_CONTROLLER_DIGITAL_DOWN);
+
+	if (gui::started) {
+		gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
+		gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
+	}
+}
+
 } // namespace gui
