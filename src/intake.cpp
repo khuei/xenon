@@ -98,7 +98,6 @@ opcontrol(void)
 			intake::run_both(0);
 		break;
 	}
-
 }
 
 } // namespace intake

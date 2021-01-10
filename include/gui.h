@@ -6,8 +6,6 @@
 
 namespace gui {
 
-extern bool started;
-
 void init(void);
 void opcontrol(void);
 
