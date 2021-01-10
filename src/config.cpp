@@ -369,6 +369,9 @@ tuner(void)
 void
 switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
 {
+	if (!config::started)
+		return;
+
 	if (master.get_digital_new_press(left)) {
 		if (current_tab > CHASSIS_TAB)
 			current_tab--;
