@@ -8,6 +8,16 @@
 
 namespace debug {
 
+enum tab {
+	CHASSIS_TAB,
+	CHASSIS_GRAPH_TAB,
+	INTAKE_TAB,
+	INTAKE_GRAPH_TAB,
+	ODOM_TAB,
+	HEALTH_TAB,
+	LOG_TAB,
+};
+
 int current_tab = 0;
 
 lv_obj_t *tabview;
