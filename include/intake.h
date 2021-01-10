@@ -11,6 +11,7 @@ void run_front(double);
 void run_internal(double);
 void run_both(double);
 void init(void);
+void opcontrol(void);
 
 } // namespace intake
 

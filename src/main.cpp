@@ -34,36 +34,7 @@ opcontrol(void)
 			autonomous();
 
 		chassis::arcade();
-
-		switch (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-		case 0:
-			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
-			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_internal(-intake::max_speed);
-			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
-				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_internal(intake::max_speed);
-			else
-				intake::run_internal(0);
-
-			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
-			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_front(-intake::max_speed);
-			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
-				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_front(intake::max_speed);
-			else
-				intake::run_front(0);
-			break;
-		case 1:
-			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
-				intake::run_both(-intake::max_speed);
-			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
-				intake::run_both(intake::max_speed);
-			else
-				intake::run_both(0);
-			break;
-		}
+		intake::opcontrol();
 
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X))
 			config::switch_tuner(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
