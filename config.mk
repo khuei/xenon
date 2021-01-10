@@ -169,7 +169,7 @@ endif
 
 -include $(wildcard $(FWDIR)/*.mk)
 
-.PHONY: all clean quick
+.PHONY: all clean quick terminal upload
 
 quick: $(DEFAULT_BIN)
 
@@ -179,6 +179,14 @@ clean:
 	@echo Cleaning project
 	-$Drm -rf $(BINDIR)
 	-$Drm -rf $(DEPDIR)
+
+terminal:
+	@echo Connecting to terminal
+	@prosv5 terminal --no-banner
+
+upload:
+	@echo Uploading project
+	@prosv5 upload --icon USER001x.bmp
 
 ifeq ($(IS_LIBRARY),1)
 ifeq ($(LIBNAME),libbest)
