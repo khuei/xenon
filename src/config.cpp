@@ -337,6 +337,36 @@ switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t rig
 }
 
 void
+tuner(void)
+{
+	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X))
+		config::switch_tuner(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
+
+	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
+		switch (config::current_tuner) {
+		case 0:
+			chassis::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+				       pros::E_CONTROLLER_DIGITAL_RIGHT,
+				       pros::E_CONTROLLER_DIGITAL_UP,
+				       pros::E_CONTROLLER_DIGITAL_DOWN);
+			break;
+		case 1:
+			intake::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+				      pros::E_CONTROLLER_DIGITAL_RIGHT,
+				      pros::E_CONTROLLER_DIGITAL_UP,
+				      pros::E_CONTROLLER_DIGITAL_DOWN);
+			break;
+		case 2:
+			purepursuit::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+					   pros::E_CONTROLLER_DIGITAL_RIGHT,
+					   pros::E_CONTROLLER_DIGITAL_UP,
+					   pros::E_CONTROLLER_DIGITAL_DOWN);
+			break;
+		}
+	}
+}
+
+void
 switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
 {
 	if (master.get_digital_new_press(left)) {
