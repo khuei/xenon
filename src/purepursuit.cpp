@@ -32,58 +32,40 @@ get_intersection(std::vector<okapi::Point> path, okapi::QLength radius)
 			auto m = (y3 - y2) / (x3 - x2);
 			if (isfinite(m.getValue())) {
 				auto a = x1 + m * m * x2 - m * y2 + m * y1;
-				auto b = sqrt(
-					-m * m * x1 * x1 + 2 * m * m * x1 * x2 +
-					2 * m * x1 * y1 - 2 * m * x1 * y2 +
-					m * m * radius * radius +
-					2 * m * x2 * y2 + radius * radius +
-					2 * y2 * y1 - m * m * x2 * x2 -
-					2 * m * x2 * y1 - y2 * y2 - y1 * y1);
+				auto b = sqrt(-m * m * x1 * x1 + 2 * m * m * x1 * x2 + 2 * m * x1 * y1 -
+					      2 * m * x1 * y2 + m * m * radius * radius + 2 * m * x2 * y2 +
+					      radius * radius + 2 * y2 * y1 - m * m * x2 * x2 - 2 * m * x2 * y1 -
+					      y2 * y2 - y1 * y1);
 				auto c = m / m + m * m;
 
 				x_int_1 = (a - b) / c;
 				x_int_2 = (a + b) / c;
 
 				if (isfinite(x_int_1.getValue())) {
-					if ((x2 < x3 && x_int_1 < x3 &&
-					     x_int_1 > x2) ||
-					    (x2 > x3 && x_int_1 > x3 &&
-					     x_int_1 < x2)) {
-						y_int_1 =
-							m * (x_int_1 - x2) + y2;
-						intersection_points.push_back(
-							{ x_int_1, y_int_1 });
+					if ((x2 < x3 && x_int_1 < x3 && x_int_1 > x2) ||
+					    (x2 > x3 && x_int_1 > x3 && x_int_1 < x2)) {
+						y_int_1 = m * (x_int_1 - x2) + y2;
+						intersection_points.push_back({ x_int_1, y_int_1 });
 					}
-					if ((x2 < x3 && x_int_2 < x3 &&
-					     x_int_2 > x2) ||
-					    (x2 > x3 && x_int_2 > x3 &&
-					     x_int_2 < x2)) {
-						y_int_2 =
-							m * (x_int_2 - x2) + y2;
-						intersection_points.push_back(
-							{ x_int_2, y_int_2 });
+					if ((x2 < x3 && x_int_2 < x3 && x_int_2 > x2) ||
+					    (x2 > x3 && x_int_2 > x3 && x_int_2 < x2)) {
+						y_int_2 = m * (x_int_2 - x2) + y2;
+						intersection_points.push_back({ x_int_2, y_int_2 });
 					}
 				}
 			} else {
-				auto a = sqrt(radius * radius - x2 * x2 +
-					      2 * x2 * x1 - x1 * x1);
+				auto a = sqrt(radius * radius - x2 * x2 + 2 * x2 * x1 - x1 * x1);
 				y_int_1 = x1 - a;
 				y_int_2 = x1 + a;
 				x_int_1 = x2;
 
 				if (isfinite(y_int_1.getValue())) {
-					if ((x2 < x3 && x_int_1 < x3 &&
-					     x_int_1 > x2) ||
-					    (x2 > x3 && x_int_1 > x3 &&
-					     x_int_1 < x2))
-						intersection_points.push_back(
-							{ x_int_1, y_int_1 });
-					if ((x2 < x3 && x_int_2 < x3 &&
-					     x_int_2 > x2) ||
-					    (x2 > x3 && x_int_2 > x3 &&
-					     x_int_2 < x2))
-						intersection_points.push_back(
-							{ x_int_1, y_int_2 });
+					if ((x2 < x3 && x_int_1 < x3 && x_int_1 > x2) ||
+					    (x2 > x3 && x_int_1 > x3 && x_int_1 < x2))
+						intersection_points.push_back({ x_int_1, y_int_1 });
+					if ((x2 < x3 && x_int_2 < x3 && x_int_2 > x2) ||
+					    (x2 > x3 && x_int_2 > x3 && x_int_2 < x2))
+						intersection_points.push_back({ x_int_1, y_int_2 });
 				}
 			}
 			if (intersection_points.size() != 0) {
@@ -150,19 +132,15 @@ follow_path(std::vector<okapi::Point> path)
 	double right_prev = 0;
 
 	for (;;) {
-		okapi::Point ang_tracking_point =
-			get_intersection(path, inner_radius);
+		okapi::Point ang_tracking_point = get_intersection(path, inner_radius);
 		if (last_segment) {
 			drive->driveToPoint(path[path.size() - 1]);
 			break;
 		}
-		okapi::Point vel_tracking_point =
-			get_intersection(path, outer_radius);
+		okapi::Point vel_tracking_point = get_intersection(path, outer_radius);
 
-		okapi::QAngle ang_error =
-			odom::get_delta_theta(ang_tracking_point);
-		okapi::QAngle vel_error =
-			odom::get_delta_theta(vel_tracking_point);
+		okapi::QAngle ang_error = odom::get_delta_theta(ang_tracking_point);
+		okapi::QAngle vel_error = odom::get_delta_theta(vel_tracking_point);
 
 		okapi::QAngle ang_derivative = ang_error - ang_prev_error;
 		okapi::QAngle vel_derivative = vel_error - vel_prev_error;
@@ -174,11 +152,9 @@ follow_path(std::vector<okapi::Point> path)
 		if (vel_error.getValue() == 0) {
 			forward_speed = max_speed;
 		} else {
-			forward_speed = kP_vel / vel_error.getValue() -
-					kD_vel * vel_derivative.getValue();
+			forward_speed = kP_vel / vel_error.getValue() - kD_vel * vel_derivative.getValue();
 		}
-		double turn_modifier = kP_ang * ang_error.getValue() +
-				       kD_ang * ang_derivative.getValue();
+		double turn_modifier = kP_ang * ang_error.getValue() + kD_ang * ang_derivative.getValue();
 
 		double left_speed = -(forward_speed + turn_modifier);
 		double right_speed = -(forward_speed - turn_modifier);
