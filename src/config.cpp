@@ -13,7 +13,7 @@ enum tune_value {
 
 int current_tune_value = 0;
 
-double max_speed = 100;
+double max_speed = 200;
 okapi::QLength distance_constant = 4.25_in;
 okapi::QLength turn_constant = 21.50_in;
 
