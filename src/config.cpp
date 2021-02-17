@@ -14,8 +14,8 @@ enum tune_value {
 int current_tune_value = 0;
 
 double max_speed = 100;
-okapi::QLength distance_constant = 3.85_in;
-okapi::QLength turn_constant = 22.75_in;
+okapi::QLength distance_constant = 4.25_in;
+okapi::QLength turn_constant = 21.50_in;
 
 void
 tuner(pros::controller_digital_e_t left,
