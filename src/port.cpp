@@ -33,12 +33,12 @@ std::shared_ptr<okapi::Motor> back_right = std::make_shared<okapi::Motor>(20,
 									  okapi::Logger::getDefaultLogger());
 
 std::shared_ptr<okapi::Motor> top_intake = std::make_shared<okapi::Motor>(8,
-									  true,
+									  false,
 									  okapi::AbstractMotor::gearset::green,
 									  okapi::AbstractMotor::encoderUnits::degrees,
 									  okapi::Logger::getDefaultLogger());
 std::shared_ptr<okapi::Motor> bottom_intake =
-	std::make_shared<okapi::Motor>(9,
+	std::make_shared<okapi::Motor>(2,
 				       false,
 				       okapi::AbstractMotor::gearset::green,
 				       okapi::AbstractMotor::encoderUnits::degrees,
