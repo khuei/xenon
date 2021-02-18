@@ -55,6 +55,27 @@ std::shared_ptr<okapi::Motor> right_intake = std::make_shared<okapi::Motor>(19,
 									    okapi::AbstractMotor::encoderUnits::degrees,
 									    okapi::Logger::getDefaultLogger());
 
+std::shared_ptr<okapi::ChassisController> left_diagonal =
+	okapi::ChassisControllerBuilder()
+		.withMotors(back_left, front_right)
+		.withDimensions(okapi::AbstractMotor::gearset::green,
+				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withMaxVelocity(chassis::max_speed)
+		.withLogger(okapi::Logger::getDefaultLogger())
+		.build();
+
+std::shared_ptr<okapi::ChassisController> right_diagonal =
+	okapi::ChassisControllerBuilder()
+		.withMotors(front_left, back_right)
+		.withDimensions(okapi::AbstractMotor::gearset::green,
+				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withMaxVelocity(chassis::max_speed)
+		.withLogger(okapi::Logger::getDefaultLogger())
+		.withOdometry(okapi::StateMode::CARTESIAN)
+		.build();
+
 std::shared_ptr<okapi::OdomChassisController> drive =
 	okapi::ChassisControllerBuilder()
 		.withMotors(front_left, front_right, back_right, back_left)
