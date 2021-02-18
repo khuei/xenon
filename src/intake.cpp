@@ -62,8 +62,8 @@ init(void)
 	intake::reset();
 	logger::elog("intake: reset");
 
-	intake::set_brake(okapi::AbstractMotor::brakeMode::coast);
-	logger::elog("intake: set brake mode to coast");
+	intake::set_brake(okapi::AbstractMotor::brakeMode::hold);
+	logger::elog("intake: set brake mode to hold");
 }
 
 void
