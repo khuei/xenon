@@ -19,6 +19,7 @@ extern okapi::QLength turn_constant;
 
 namespace intake {
 
+extern bool baby_mode;
 extern double max_speed;
 extern double accel_step;
 

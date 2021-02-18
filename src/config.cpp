@@ -78,12 +78,14 @@ tuner(pros::controller_digital_e_t left,
 namespace intake {
 
 enum tune_value {
+	BABY_MODE,
 	MAX_SPEED,
 	ACCEL_STEP,
 };
 
 int current_tune_value = 0;
 
+bool baby_mode = true;
 double max_speed = 200;
 double accel_step = 5;
 
@@ -95,7 +97,7 @@ tuner(pros::controller_digital_e_t left,
 {
 	if (master.get_digital_new_press(left)) {
 		master.clear_line(2);
-		if (current_tune_value != MAX_SPEED)
+		if (current_tune_value != BABY_MODE)
 			current_tune_value--;
 		else
 			current_tune_value = ACCEL_STEP;
@@ -106,12 +108,21 @@ tuner(pros::controller_digital_e_t left,
 		if (current_tune_value != ACCEL_STEP)
 			current_tune_value++;
 		else
-			current_tune_value = MAX_SPEED;
+			current_tune_value = BABY_MODE;
 	}
 
 	if (master.get_digital(left) || master.get_digital(right) || master.get_digital(decrease) ||
 	    master.get_digital(increase)) {
 		switch (current_tune_value) {
+		case BABY_MODE:
+			master.print(2, 0, baby_mode ? "baby_mode: true" : "baby_mode: false");
+			if (master.get_digital_new_press(increase) || master.get_digital_new_press(decrease)) {
+				if (baby_mode)
+					baby_mode = false;
+				else
+					baby_mode = true;
+			}
+			break;
 		case MAX_SPEED:
 			master.print(2, 0, "max_speed: %f", intake::max_speed);
 			if (master.get_digital_new_press(increase))
