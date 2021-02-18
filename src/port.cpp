@@ -55,6 +55,29 @@ std::shared_ptr<okapi::Motor> right_intake = std::make_shared<okapi::Motor>(19,
 									    okapi::AbstractMotor::encoderUnits::degrees,
 									    okapi::Logger::getDefaultLogger());
 
+std::shared_ptr<okapi::ChassisController> internal_intake =
+	okapi::ChassisControllerBuilder()
+		.withMotors(bottom_intake, top_intake)
+		.withDimensions(okapi::AbstractMotor::gearset::green,
+				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withMaxVelocity(intake::max_speed)
+		.withLogger(okapi::Logger::getDefaultLogger())
+		.build();
+
+std::shared_ptr<okapi::ChassisController> front_intake =
+	okapi::ChassisControllerBuilder()
+		.withMotors(left_intake, right_intake)
+		.withDimensions(okapi::AbstractMotor::gearset::green,
+				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withMaxVelocity(intake::max_speed)
+		.withLogger(okapi::Logger::getDefaultLogger())
+		.build();
+
+std::shared_ptr<okapi::SkidSteerModel> internal_model = std::dynamic_pointer_cast<okapi::SkidSteerModel>(internal_intake->getModel());
+std::shared_ptr<okapi::SkidSteerModel> front_model = std::dynamic_pointer_cast<okapi::SkidSteerModel>(front_intake->getModel());
+
 std::shared_ptr<okapi::ChassisController> left_diagonal =
 	okapi::ChassisControllerBuilder()
 		.withMotors(back_left, front_right)
