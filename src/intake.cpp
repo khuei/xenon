@@ -63,6 +63,16 @@ init(void)
 
 	intake::set_brake(okapi::AbstractMotor::brakeMode::hold);
 	logger::elog("intake: set brake mode to hold");
+
+	optical->set_led_pwm(100);
+
+	vision->clear_led();
+	light->set_led(COLOR_RED);
+	vision->set_auto_white_balance(false);
+	vision->set_exposure(150);
+
+	pros::vision_signature_s_t RED_SIG = pros::Vision::signature_from_utility(1, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
+	vision->set_signature(1, &RED_SIG);
 }
 
 void
