@@ -60,7 +60,7 @@ std::shared_ptr<okapi::ChassisController> internal_intake =
 		.withMotors(bottom_intake, top_intake)
 		.withDimensions(okapi::AbstractMotor::gearset::green,
 				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
-		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 50_ms)
 		.withMaxVelocity(intake::max_speed)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.build();
@@ -70,7 +70,7 @@ std::shared_ptr<okapi::ChassisController> front_intake =
 		.withMotors(left_intake, right_intake)
 		.withDimensions(okapi::AbstractMotor::gearset::green,
 				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
-		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 50_ms)
 		.withMaxVelocity(intake::max_speed)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.build();
@@ -83,7 +83,7 @@ std::shared_ptr<okapi::ChassisController> left_diagonal =
 		.withMotors(back_left, front_right)
 		.withDimensions(okapi::AbstractMotor::gearset::green,
 				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
-		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 50_ms)
 		.withMaxVelocity(chassis::max_speed)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.build();
@@ -93,7 +93,7 @@ std::shared_ptr<okapi::ChassisController> right_diagonal =
 		.withMotors(front_left, back_right)
 		.withDimensions(okapi::AbstractMotor::gearset::green,
 				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
-		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 50_ms)
 		.withMaxVelocity(chassis::max_speed)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.withOdometry(okapi::StateMode::CARTESIAN)
@@ -104,7 +104,7 @@ std::shared_ptr<okapi::OdomChassisController> drive =
 		.withMotors(front_left, front_right, back_right, back_left)
 		.withDimensions(okapi::AbstractMotor::gearset::green,
 				{ { chassis::distance_constant, chassis::turn_constant }, okapi::imev5GreenTPR })
-		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 100_ms)
+		.withClosedLoopControllerTimeUtil(std::numeric_limits<double>::max(), 10, 50_ms)
 		.withMaxVelocity(chassis::max_speed)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.withOdometry(okapi::StateMode::CARTESIAN)
@@ -113,7 +113,7 @@ std::shared_ptr<okapi::OdomChassisController> drive =
 std::shared_ptr<okapi::AsyncMotionProfileController> drive_profile =
 	okapi::AsyncMotionProfileControllerBuilder()
 		.withLimits({ 1, 2, 10 })
-		.withTimeUtilFactory(okapi::ConfigurableTimeUtilFactory(std::numeric_limits<double>::max(), 10, 100_ms))
+		.withTimeUtilFactory(okapi::ConfigurableTimeUtilFactory(std::numeric_limits<double>::max(), 10, 50_ms))
 		.withOutput(drive)
 		.withLogger(okapi::Logger::getDefaultLogger())
 		.buildMotionProfileController();
