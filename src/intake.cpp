@@ -48,6 +48,14 @@ run_both(double speed)
 }
 
 void
+eject(double max_speed)
+{
+	internal_speed = util::slew(&internal_speed, accel_step, max_speed);
+	internal_model->left(internal_speed);
+	internal_model->right(-internal_speed);
+}
+
+void
 init(void)
 {
 	intake::reset();
@@ -65,7 +73,7 @@ opcontrol(void)
 		case 0:
 			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
 			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::run_internal(-intake::max_speed);
+				intake::eject(intake::max_speed);
 			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
 				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_internal(intake::max_speed);
@@ -104,6 +112,11 @@ opcontrol(void)
 			intake::run_internal(-intake::max_speed);
 		else
 			intake::run_internal(0);
+
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+			intake::eject(intake::max_speed);
+		else
+			intake::eject(0);
 	}
 }
 
