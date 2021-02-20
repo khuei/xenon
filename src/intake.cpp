@@ -56,6 +56,48 @@ eject(double max_speed)
 }
 
 void
+sort(double speed)
+{
+	int target_low_limit;
+	int target_high_limit;
+	int eject_low_limit;
+	int eject_high_limit;
+
+	if (auton::alliance_color.compare("blue") == 0) {
+		target_low_limit = 230;
+		target_high_limit = 250;
+		eject_low_limit = 10;
+		eject_high_limit = 30;
+	} else if (auton::alliance_color.compare("red") == 0) {
+		target_low_limit = 10;
+		target_high_limit = 30;
+		eject_low_limit = 230;
+		eject_high_limit = 250;
+	}
+
+	if (vision->get_object_count() == 0)
+		internal_model->right(0);
+
+	if (optical->get_hue() > target_low_limit && optical->get_hue() < target_high_limit) {
+		if (vision->get_object_count() != 0) {
+			internal_model->left(speed);
+			internal_model->right(speed);
+		} else {
+			internal_model->left(0);
+			internal_model->right(0);
+		}
+	} else if (optical->get_hue() > eject_low_limit && optical->get_hue() < eject_high_limit){
+		if (vision->get_object_count() != 0) {
+			internal_model->right(-speed);
+			internal_model->left(speed);
+		} else {
+			internal_model->right(0);
+			internal_model->left(speed);
+		}
+	}
+}
+
+void
 init(void)
 {
 	intake::reset();
