@@ -3,6 +3,38 @@
 #include "config.h"
 #include "logger.h"
 
+namespace auton {
+
+enum tune_value {
+	ALLIANCE_COLOR,
+};
+
+int current_tune_value = 0;
+
+std::string alliance_color;
+
+void
+tuner(pros::controller_digital_e_t left,
+      pros::controller_digital_e_t right,
+      pros::controller_digital_e_t increase,
+      pros::controller_digital_e_t decrease)
+{
+	if (master.get_digital(left) || master.get_digital(right) || master.get_digital(decrease) ||
+	    master.get_digital(increase)) {
+		switch (current_tune_value) {
+		case ALLIANCE_COLOR:
+			master.print(2, 0, "color: %s", auton::alliance_color);
+			if (master.get_digital_new_press(increase))
+				auton::alliance_color = "blue";
+			if (master.get_digital_new_press(decrease))
+				auton::alliance_color = "red";
+			break;
+		}
+	}
+}
+
+} // namespace auton
+
 namespace chassis {
 
 enum tune_value {
@@ -79,6 +111,7 @@ namespace intake {
 
 enum tune_value {
 	BABY_MODE,
+	AUTO_SORT,
 	MAX_SPEED,
 	ACCEL_STEP,
 };
@@ -86,6 +119,7 @@ enum tune_value {
 int current_tune_value = 0;
 
 bool baby_mode = true;
+bool auto_sort = false;
 double max_speed = 200;
 double accel_step = 5;
 
@@ -121,6 +155,15 @@ tuner(pros::controller_digital_e_t left,
 					baby_mode = false;
 				else
 					baby_mode = true;
+			}
+			break;
+		case AUTO_SORT:
+			master.print(2, 0, auto_sort ? "auto_sort: true" : "auto_sort: false");
+			if (master.get_digital_new_press(increase) || master.get_digital_new_press(decrease)) {
+				if (auto_sort)
+					auto_sort = false;
+				else
+					auto_sort = true;
 			}
 			break;
 		case MAX_SPEED:
@@ -269,6 +312,7 @@ tuner(pros::controller_digital_e_t left,
 namespace config {
 
 enum tuner_mode {
+	AUTON_TUNER,
 	CHASSIS_TUNER,
 	INTAKE_TUNER,
 	PUREPURSUIT_TUNER,
@@ -318,7 +362,7 @@ switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t rig
 {
 	if (master.get_digital_new_press(left)) {
 		master.clear_line(2);
-		if (current_tuner != CHASSIS_TUNER)
+		if (current_tuner != AUTON_TUNER)
 			current_tuner--;
 		else
 			current_tuner = PUREPURSUIT_TUNER;
@@ -329,11 +373,14 @@ switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t rig
 		if (current_tuner != PUREPURSUIT_TUNER)
 			current_tuner++;
 		else
-			current_tuner = CHASSIS_TUNER;
+			current_tuner = AUTON_TUNER;
 	}
 
 	if (master.get_digital(left) || master.get_digital(right)) {
 		switch (current_tuner) {
+		case AUTON_TUNER:
+			master.print(2, 0, "auton tuner");
+			break;
 		case CHASSIS_TUNER:
 			master.print(2, 0, "chassis tuner");
 			break;
@@ -356,18 +403,24 @@ tuner(void)
 	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
 		switch (config::current_tuner) {
 		case 0:
-			chassis::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+			auton::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
 				       pros::E_CONTROLLER_DIGITAL_RIGHT,
 				       pros::E_CONTROLLER_DIGITAL_UP,
 				       pros::E_CONTROLLER_DIGITAL_DOWN);
 			break;
 		case 1:
+			chassis::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+				       pros::E_CONTROLLER_DIGITAL_RIGHT,
+				       pros::E_CONTROLLER_DIGITAL_UP,
+				       pros::E_CONTROLLER_DIGITAL_DOWN);
+			break;
+		case 2:
 			intake::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
 				      pros::E_CONTROLLER_DIGITAL_RIGHT,
 				      pros::E_CONTROLLER_DIGITAL_UP,
 				      pros::E_CONTROLLER_DIGITAL_DOWN);
 			break;
-		case 2:
+		case 3:
 			purepursuit::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
 					   pros::E_CONTROLLER_DIGITAL_RIGHT,
 					   pros::E_CONTROLLER_DIGITAL_UP,

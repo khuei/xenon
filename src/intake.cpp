@@ -56,6 +56,49 @@ eject(double max_speed)
 }
 
 void
+sort(double speed)
+{
+	int target_low_limit;
+	int target_high_limit;
+	int eject_low_limit;
+	int eject_high_limit;
+
+	if (auton::alliance_color.compare("blue") == 0) {
+		target_low_limit = 230;
+		target_high_limit = 250;
+		eject_low_limit = 10;
+		eject_high_limit = 30;
+	} else if (auton::alliance_color.compare("red") == 0) {
+		target_low_limit = 10;
+		target_high_limit = 30;
+		eject_low_limit = 230;
+		eject_high_limit = 250;
+	}
+
+	if (vision->get_object_count() == 0 &&
+	    !master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A))
+		internal_model->right(0);
+
+	if (optical->get_hue() > target_low_limit && optical->get_hue() < target_high_limit) {
+		if (vision->get_object_count() != 0) {
+			internal_model->left(speed);
+			internal_model->right(speed);
+		} else {
+			internal_model->left(0);
+			internal_model->right(0);
+		}
+	} else if (optical->get_hue() > eject_low_limit && optical->get_hue() < eject_high_limit){
+		if (vision->get_object_count() != 0) {
+			internal_model->right(-speed);
+			internal_model->left(speed);
+		} else {
+			internal_model->right(0);
+			internal_model->left(speed);
+		}
+	}
+}
+
+void
 init(void)
 {
 	intake::reset();
@@ -63,6 +106,16 @@ init(void)
 
 	intake::set_brake(okapi::AbstractMotor::brakeMode::hold);
 	logger::elog("intake: set brake mode to hold");
+
+	optical->set_led_pwm(100);
+
+	vision->clear_led();
+	light->set_led(COLOR_RED);
+	vision->set_auto_white_balance(false);
+	vision->set_exposure(150);
+
+	pros::vision_signature_s_t RED_SIG = pros::Vision::signature_from_utility(1, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
+	vision->set_signature(1, &RED_SIG);
 }
 
 void
@@ -115,6 +168,13 @@ opcontrol(void)
 		else
 			intake::run_internal(0);
 	}
+
+	if (intake::auto_sort) {
+		intake::sort(intake::max_speed);
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+			internal_model->right(intake::max_speed);
+	}
+
 }
 
 } // namespace intake

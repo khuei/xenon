@@ -2,11 +2,17 @@
 #define _PORT_H_
 
 #include "okapi/api.hpp"
+#include "pros/optical.hpp"
+#include "pros/vision.hpp"
 #include "pros/rtos.hpp"
 
 using namespace okapi::literals;
 
 extern pros::Controller master;
+
+extern std::shared_ptr<pros::Optical> optical;
+extern std::shared_ptr<pros::Vision> vision;
+extern std::shared_ptr<pros::Vision> light;
 
 extern std::shared_ptr<okapi::IMU> imu;
 
