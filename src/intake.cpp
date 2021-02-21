@@ -103,6 +103,8 @@ opcontrol(void)
 			intake::run_front(intake::max_speed);
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
 			intake::run_front(-intake::max_speed);
+		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+			intake::eject(intake::max_speed);
 		else
 			intake::run_front(0);
 
@@ -112,11 +114,6 @@ opcontrol(void)
 			intake::run_internal(-intake::max_speed);
 		else
 			intake::run_internal(0);
-
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
-			intake::eject(intake::max_speed);
-		else
-			intake::eject(0);
 	}
 }
 
