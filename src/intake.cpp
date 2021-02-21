@@ -75,7 +75,8 @@ sort(double speed)
 		eject_high_limit = 250;
 	}
 
-	if (vision->get_object_count() == 0)
+	if (vision->get_object_count() == 0 &&
+	    !master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A))
 		internal_model->right(0);
 
 	if (optical->get_hue() > target_low_limit && optical->get_hue() < target_high_limit) {
@@ -167,6 +168,13 @@ opcontrol(void)
 		else
 			intake::run_internal(0);
 	}
+
+	if (intake::auto_sort) {
+		intake::sort(intake::max_speed);
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+			internal_model->right(intake::max_speed);
+	}
+
 }
 
 } // namespace intake

@@ -111,6 +111,7 @@ namespace intake {
 
 enum tune_value {
 	BABY_MODE,
+	AUTO_SORT,
 	MAX_SPEED,
 	ACCEL_STEP,
 };
@@ -118,6 +119,7 @@ enum tune_value {
 int current_tune_value = 0;
 
 bool baby_mode = true;
+bool auto_sort = false;
 double max_speed = 200;
 double accel_step = 5;
 
@@ -153,6 +155,15 @@ tuner(pros::controller_digital_e_t left,
 					baby_mode = false;
 				else
 					baby_mode = true;
+			}
+			break;
+		case AUTO_SORT:
+			master.print(2, 0, auto_sort ? "auto_sort: true" : "auto_sort: false");
+			if (master.get_digital_new_press(increase) || master.get_digital_new_press(decrease)) {
+				if (auto_sort)
+					auto_sort = false;
+				else
+					auto_sort = true;
 			}
 			break;
 		case MAX_SPEED:
