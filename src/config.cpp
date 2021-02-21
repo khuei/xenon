@@ -121,7 +121,7 @@ int current_tune_value = 0;
 bool baby_mode = true;
 bool auto_sort = false;
 double max_speed = 200;
-double accel_step = 5;
+double accel_step = 8;
 
 void
 tuner(pros::controller_digital_e_t left,
