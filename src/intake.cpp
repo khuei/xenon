@@ -116,6 +116,9 @@ init(void)
 
 	pros::vision_signature_s_t RED_SIG = pros::Vision::signature_from_utility(1, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
 	vision->set_signature(1, &RED_SIG);
+
+	front_intake->setMaxVelocity(intake::max_speed);
+	internal_intake->setMaxVelocity(intake::max_speed);
 }
 
 void

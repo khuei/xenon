@@ -1,6 +1,7 @@
 #include "pros/rtos.hpp"
 
 #include "chassis.h"
+#include "config.h"
 #include "logger.h"
 
 namespace chassis {
@@ -46,6 +47,8 @@ init(void)
 
 	chassis::set_brake(okapi::AbstractMotor::brakeMode::hold);
 	logger::elog("chassis: set brake mode to hold");
+
+	drive->setMaxVelocity(chassis::max_speed);
 }
 
 } // namespace chassis
