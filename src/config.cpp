@@ -1,6 +1,7 @@
 #include "pros/rtos.hpp"
 
 #include "config.h"
+#include "main.h"
 #include "logger.h"
 
 namespace auton {
@@ -397,8 +398,11 @@ switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t rig
 void
 tuner(void)
 {
-	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X))
+	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
 		config::switch_tuner(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
+			initialize();
+	}
 
 	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
 		switch (config::current_tuner) {
