@@ -30,7 +30,9 @@ opcontrol(void)
 {
 	std::uint32_t now = pros::millis();
 	for (;;) {
-		if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A) && !pros::competition::is_connected())
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X) &&
+		    master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)
+		    && !pros::competition::is_connected())
 			autonomous();
 
 		chassis::arcade();
