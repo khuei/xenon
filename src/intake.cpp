@@ -129,7 +129,7 @@ opcontrol(void)
 		case 0:
 			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
 			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-				intake::eject(intake::max_speed);
+				intake::run_internal(-intake::max_speed);
 			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
 				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_internal(intake::max_speed);
@@ -159,8 +159,6 @@ opcontrol(void)
 			intake::run_front(intake::max_speed);
 		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
 			intake::run_front(-intake::max_speed);
-		else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
-			intake::eject(intake::max_speed);
 		else
 			intake::run_front(0);
 
@@ -176,8 +174,10 @@ opcontrol(void)
 		intake::sort(intake::max_speed);
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
 			internal_model->right(intake::max_speed);
+	} else {
+		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A))
+			intake::eject(intake::max_speed);
 	}
-
 }
 
 } // namespace intake
