@@ -7,7 +7,6 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 std::shared_ptr<okapi::IMU> imu = std::make_shared<okapi::IMU>(16, okapi::IMUAxes::z);
 std::shared_ptr<pros::Optical> optical = std::make_shared<pros::Optical>(18);
 std::shared_ptr<pros::Vision> vision = std::make_shared<pros::Vision>(17);
-std::shared_ptr<pros::Vision> light = std::make_shared<pros::Vision>(15);
 
 std::shared_ptr<okapi::Logger> okapi_logger =
 	std::make_shared<okapi::Logger>(okapi::TimeUtilFactory::createDefault().getTimer(),

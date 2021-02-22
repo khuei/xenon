@@ -110,7 +110,6 @@ init(void)
 	optical->set_led_pwm(100);
 
 	vision->clear_led();
-	light->set_led(COLOR_RED);
 	vision->set_auto_white_balance(false);
 	vision->set_exposure(150);
 

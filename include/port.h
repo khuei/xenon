@@ -12,7 +12,6 @@ extern pros::Controller master;
 
 extern std::shared_ptr<pros::Optical> optical;
 extern std::shared_ptr<pros::Vision> vision;
-extern std::shared_ptr<pros::Vision> light;
 
 extern std::shared_ptr<okapi::IMU> imu;
 
