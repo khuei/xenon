@@ -25,6 +25,19 @@ set_brake(okapi::AbstractMotor::brakeMode brake_mode)
 }
 
 void
+move(okapi::QLength x, okapi::QLength y, okapi::QAngle theta)
+{
+	okapi::PathfinderPoint start = {0_ft, 0_ft, 0_deg};
+	okapi::PathfinderPoint target = {y, x, theta};
+	bool reversed = false;
+
+	if (y < 0_in)
+		reversed = true;
+
+	drive_profile->moveTo({start, target}, reversed);
+}
+
+void
 arcade(void)
 {
 	x_drive->xArcade((double)master.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127,

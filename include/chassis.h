@@ -5,6 +5,7 @@
 
 namespace chassis {
 
+void move(okapi::QLength, okapi::QLength, okapi::QAngle);
 void arcade(void);
 void init(void);
 
