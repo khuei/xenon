@@ -24,7 +24,7 @@ tuner(pros::controller_digital_e_t left,
 	    master.get_digital(increase)) {
 		switch (current_tune_value) {
 		case ALLIANCE_COLOR:
-			master.print(2, 0, "color: %s", auton::alliance_color);
+			master.print(2, 0, "color: %-14s", auton::alliance_color);
 			if (master.get_digital_new_press(increase))
 				auton::alliance_color = "blue";
 			if (master.get_digital_new_press(decrease))
@@ -150,7 +150,7 @@ tuner(pros::controller_digital_e_t left,
 	    master.get_digital(increase)) {
 		switch (current_tune_value) {
 		case BABY_MODE:
-			master.print(2, 0, baby_mode ? "baby_mode: true" : "baby_mode: false");
+			master.print(2, 0, baby_mode ? "baby_mode: true%-10s" : "baby_mode: false%-10s");
 			if (master.get_digital_new_press(increase) || master.get_digital_new_press(decrease)) {
 				if (baby_mode)
 					baby_mode = false;
@@ -159,7 +159,7 @@ tuner(pros::controller_digital_e_t left,
 			}
 			break;
 		case AUTO_SORT:
-			master.print(2, 0, auto_sort ? "auto_sort: true" : "auto_sort: false");
+			master.print(2, 0, auto_sort ? "auto_sort: true%-10s" : "auto_sort: false%-10s");
 			if (master.get_digital_new_press(increase) || master.get_digital_new_press(decrease)) {
 				if (auto_sort)
 					auto_sort = false;
