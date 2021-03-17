@@ -33,7 +33,6 @@ extern std::shared_ptr<okapi::ChassisController> front_intake;
 extern std::shared_ptr<okapi::SkidSteerModel> internal_model;
 extern std::shared_ptr<okapi::SkidSteerModel> front_model;
 
-
 extern std::shared_ptr<okapi::ChassisController> left_diagonal;
 extern std::shared_ptr<okapi::ChassisController> right_diagonal;
 extern std::shared_ptr<okapi::OdomChassisController> drive;

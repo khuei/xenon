@@ -58,7 +58,12 @@ elog(const char *str)
 	millisecond -= second * 1000;
 
 	FILE *event_log = fopen(logfile(), "a");
-	fprintf(event_log, "[%02ld:%02ld:%02ld] %s\n", hour, minute, second, str);
+	fprintf(event_log,
+		"[%02ld:%02ld:%02ld] %s\n",
+		hour,
+		minute,
+		second,
+		str);
 	fclose(event_log);
 }
 

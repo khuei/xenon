@@ -80,7 +80,8 @@ switch_display(pros::controller_digital_e_t toggle)
 }
 
 void
-switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
+switch_tab(pros::controller_digital_e_t left,
+	   pros::controller_digital_e_t right)
 {
 	switch (current_display) {
 	case GUI_CONFIG:
@@ -136,8 +137,10 @@ opcontrol(void)
 	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
 		gui::toggle(pros::E_CONTROLLER_DIGITAL_DOWN);
 
-	gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
-	gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN, pros::E_CONTROLLER_DIGITAL_UP);
+	gui::switch_tab(pros::E_CONTROLLER_DIGITAL_LEFT,
+			pros::E_CONTROLLER_DIGITAL_RIGHT);
+	gui::switch_theme(pros::E_CONTROLLER_DIGITAL_DOWN,
+			  pros::E_CONTROLLER_DIGITAL_UP);
 }
 
 } // namespace gui

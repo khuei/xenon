@@ -22,7 +22,7 @@ tuner(pros::controller_digital_e_t left,
       pros::controller_digital_e_t increase,
       pros::controller_digital_e_t decrease)
 {
-		if (master.get_digital_new_press(left)) {
+	if (master.get_digital_new_press(left)) {
 		master.clear_line(2);
 		if (current_tune_value != ALLIANCE_COLOR)
 			current_tune_value--;
@@ -38,11 +38,14 @@ tuner(pros::controller_digital_e_t left,
 			current_tune_value = ALLIANCE_COLOR;
 	}
 
-	if (master.get_digital(left) || master.get_digital(right) || master.get_digital(decrease) ||
-	    master.get_digital(increase)) {
+	if (master.get_digital(left) || master.get_digital(right) ||
+	    master.get_digital(decrease) || master.get_digital(increase)) {
 		switch (current_tune_value) {
 		case ALLIANCE_COLOR:
-			master.print(2, 0, "color: %-14s", auton::alliance_color);
+			master.print(2,
+				     0,
+				     "color: %-14s",
+				     auton::alliance_color);
 			if (master.get_digital_new_press(increase))
 				auton::alliance_color = "blue";
 			if (master.get_digital_new_press(decrease))
@@ -97,8 +100,8 @@ tuner(pros::controller_digital_e_t left,
 			current_tune_value = MAX_SPEED;
 	}
 
-	if (master.get_digital(left) || master.get_digital(right) || master.get_digital(decrease) ||
-	    master.get_digital(increase)) {
+	if (master.get_digital(left) || master.get_digital(right) ||
+	    master.get_digital(decrease) || master.get_digital(increase)) {
 		switch (current_tune_value) {
 		case MAX_SPEED:
 			master.print(2, 0, "max_speed: %f", chassis::max_speed);
@@ -111,17 +114,21 @@ tuner(pros::controller_digital_e_t left,
 			master.print(2,
 				     0,
 				     "dist_const: %s",
-				     std::to_string(chassis::distance_constant.convert(okapi::inch)));
+				     std::to_string(
+					     chassis::distance_constant.convert(
+						     okapi::inch)));
 			if (master.get_digital_new_press(increase))
 				chassis::distance_constant += 0.01_in;
 			if (master.get_digital_new_press(decrease))
 				chassis::distance_constant -= 0.01_in;
 			break;
 		case TURN_CONSTANT:
-			master.print(2,
-				     0,
-				     "turn_const: %s",
-				     std::to_string(chassis::turn_constant.convert(okapi::inch)));
+			master.print(
+				2,
+				0,
+				"turn_const: %s",
+				std::to_string(chassis::turn_constant.convert(
+					okapi::inch)));
 			if (master.get_digital_new_press(increase))
 				chassis::turn_constant += 0.01_in;
 			if (master.get_digital_new_press(decrease))
@@ -171,12 +178,16 @@ tuner(pros::controller_digital_e_t left,
 			current_tune_value = BABY_MODE;
 	}
 
-	if (master.get_digital(left) || master.get_digital(right) || master.get_digital(decrease) ||
-	    master.get_digital(increase)) {
+	if (master.get_digital(left) || master.get_digital(right) ||
+	    master.get_digital(decrease) || master.get_digital(increase)) {
 		switch (current_tune_value) {
 		case BABY_MODE:
-			master.print(2, 0, baby_mode ? "baby_mode: true%-10s" : "baby_mode: false%-10s");
-			if (master.get_digital_new_press(increase) || master.get_digital_new_press(decrease)) {
+			master.print(2,
+				     0,
+				     baby_mode ? "baby_mode: true%-10s" :
+						       "baby_mode: false%-10s");
+			if (master.get_digital_new_press(increase) ||
+			    master.get_digital_new_press(decrease)) {
 				if (baby_mode)
 					baby_mode = false;
 				else
@@ -184,8 +195,12 @@ tuner(pros::controller_digital_e_t left,
 			}
 			break;
 		case AUTO_SORT:
-			master.print(2, 0, auto_sort ? "auto_sort: true%-10s" : "auto_sort: false%-10s");
-			if (master.get_digital_new_press(increase) || master.get_digital_new_press(decrease)) {
+			master.print(2,
+				     0,
+				     auto_sort ? "auto_sort: true%-10s" :
+						       "auto_sort: false%-10s");
+			if (master.get_digital_new_press(increase) ||
+			    master.get_digital_new_press(decrease)) {
 				if (auto_sort)
 					auto_sort = false;
 				else
@@ -264,18 +279,24 @@ tuner(pros::controller_digital_e_t left,
 			current_tune_value = MAX_SPEED;
 	}
 
-	if (master.get_digital(left) || master.get_digital(right) || master.get_digital(decrease) ||
-	    master.get_digital(increase)) {
+	if (master.get_digital(left) || master.get_digital(right) ||
+	    master.get_digital(decrease) || master.get_digital(increase)) {
 		switch (current_tune_value) {
 		case MAX_SPEED:
-			master.print(2, 0, "max_speed: %f", purepursuit::max_speed);
+			master.print(2,
+				     0,
+				     "max_speed: %f",
+				     purepursuit::max_speed);
 			if (master.get_digital_new_press(increase))
 				purepursuit::max_speed += 2;
 			if (master.get_digital_new_press(decrease))
 				purepursuit::max_speed -= 2;
 			break;
 		case ACCEL_STEP:
-			master.print(2, 0, "accel_step: %f", purepursuit::accel_step);
+			master.print(2,
+				     0,
+				     "accel_step: %f",
+				     purepursuit::accel_step);
 			if (master.get_digital_new_press(increase))
 				purepursuit::accel_step += 1;
 			if (master.get_digital_new_press(decrease))
@@ -285,7 +306,9 @@ tuner(pros::controller_digital_e_t left,
 			master.print(2,
 				     0,
 				     "inner_radius: %s",
-				     std::to_string(purepursuit::inner_radius.convert(okapi::inch)));
+				     std::to_string(
+					     purepursuit::inner_radius.convert(
+						     okapi::inch)));
 			if (master.get_digital_new_press(increase))
 				purepursuit::inner_radius += 1_in;
 			if (master.get_digital_new_press(decrease))
@@ -295,7 +318,9 @@ tuner(pros::controller_digital_e_t left,
 			master.print(2,
 				     0,
 				     "outer_radius: %s",
-				     std::to_string(purepursuit::outer_radius.convert(okapi::inch)));
+				     std::to_string(
+					     purepursuit::outer_radius.convert(
+						     okapi::inch)));
 			if (master.get_digital_new_press(increase))
 				purepursuit::outer_radius += 1_in;
 			if (master.get_digital_new_press(decrease))
@@ -358,24 +383,42 @@ lv_obj_t *tabview;
 
 lv_obj_t *chassis_tab;
 lv_obj_t *chassis_btnm;
-const char *chassis_btnm_map[8] = { "SPD" SYMBOL_PLUS,	"D_CST" SYMBOL_PLUS,  "T_CST" SYMBOL_PLUS,  "\n",
-				    "SPD" SYMBOL_MINUS, "D_CST" SYMBOL_MINUS, "T_CST" SYMBOL_MINUS, "" };
+const char *chassis_btnm_map[8] = { "SPD" SYMBOL_PLUS,	  "D_CST" SYMBOL_PLUS,
+				    "T_CST" SYMBOL_PLUS,  "\n",
+				    "SPD" SYMBOL_MINUS,	  "D_CST" SYMBOL_MINUS,
+				    "T_CST" SYMBOL_MINUS, "" };
 lv_obj_t *chassis_label;
 
 lv_obj_t *intake_tab;
 lv_obj_t *intake_btnm;
-const char *intake_btnm_map[6] = { "SPD" SYMBOL_PLUS,  "ACCEL" SYMBOL_PLUS,  "\n",
-				   "SPD" SYMBOL_MINUS, "ACCEL" SYMBOL_MINUS, "" };
+const char *intake_btnm_map[6] = {
+	"SPD" SYMBOL_PLUS,  "ACCEL" SYMBOL_PLUS,  "\n",
+	"SPD" SYMBOL_MINUS, "ACCEL" SYMBOL_MINUS, ""
+};
 lv_obj_t *intake_label;
 
 lv_obj_t *purepursuit_tab;
 lv_obj_t *purepursuit_btnm;
-const char *purepursuit_btnm_map[20] = {
-	"SPD" SYMBOL_PLUS,     "ACCEL" SYMBOL_PLUS,   "I_RAD" SYMBOL_PLUS,   "O_RAD" SYMBOL_PLUS,   "\n",
-	"SPD" SYMBOL_MINUS,    "ACCEL" SYMBOL_MINUS,  "I_RAD" SYMBOL_MINUS,  "O_RAD" SYMBOL_MINUS,  "\n",
-	"kP_VEL" SYMBOL_PLUS,  "kD_VEL" SYMBOL_PLUS,  "kP_ANG" SYMBOL_PLUS,  "kD_ANG" SYMBOL_PLUS,  "\n",
-	"kP_VEL" SYMBOL_MINUS, "kD_VEL" SYMBOL_MINUS, "kP_ANG" SYMBOL_MINUS, "kD_ANG" SYMBOL_MINUS, ""
-};
+const char *purepursuit_btnm_map[20] = { "SPD" SYMBOL_PLUS,
+					 "ACCEL" SYMBOL_PLUS,
+					 "I_RAD" SYMBOL_PLUS,
+					 "O_RAD" SYMBOL_PLUS,
+					 "\n",
+					 "SPD" SYMBOL_MINUS,
+					 "ACCEL" SYMBOL_MINUS,
+					 "I_RAD" SYMBOL_MINUS,
+					 "O_RAD" SYMBOL_MINUS,
+					 "\n",
+					 "kP_VEL" SYMBOL_PLUS,
+					 "kD_VEL" SYMBOL_PLUS,
+					 "kP_ANG" SYMBOL_PLUS,
+					 "kD_ANG" SYMBOL_PLUS,
+					 "\n",
+					 "kP_VEL" SYMBOL_MINUS,
+					 "kD_VEL" SYMBOL_MINUS,
+					 "kP_ANG" SYMBOL_MINUS,
+					 "kD_ANG" SYMBOL_MINUS,
+					 "" };
 lv_obj_t *purepursuit_misc_label;
 lv_obj_t *purepursuit_pid_label;
 
@@ -384,7 +427,8 @@ bool started;
 std::shared_ptr<pros::Task> configTask;
 
 void
-switch_tuner(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
+switch_tuner(pros::controller_digital_e_t left,
+	     pros::controller_digital_e_t right)
 {
 	if (master.get_digital_new_press(left)) {
 		master.clear_line(2);
@@ -424,7 +468,8 @@ void
 tuner(void)
 {
 	if (master.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
-		config::switch_tuner(pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT);
+		config::switch_tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
+				     pros::E_CONTROLLER_DIGITAL_RIGHT);
 		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
 			initialize();
 	}
@@ -433,9 +478,9 @@ tuner(void)
 		switch (config::current_tuner) {
 		case 0:
 			auton::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
-				       pros::E_CONTROLLER_DIGITAL_RIGHT,
-				       pros::E_CONTROLLER_DIGITAL_UP,
-				       pros::E_CONTROLLER_DIGITAL_DOWN);
+				     pros::E_CONTROLLER_DIGITAL_RIGHT,
+				     pros::E_CONTROLLER_DIGITAL_UP,
+				     pros::E_CONTROLLER_DIGITAL_DOWN);
 			break;
 		case 1:
 			chassis::tuner(pros::E_CONTROLLER_DIGITAL_LEFT,
@@ -460,7 +505,8 @@ tuner(void)
 }
 
 void
-switch_tab(pros::controller_digital_e_t left, pros::controller_digital_e_t right)
+switch_tab(pros::controller_digital_e_t left,
+	   pros::controller_digital_e_t right)
 {
 	if (!config::started)
 		return;
@@ -501,31 +547,43 @@ config_task(void)
 	for (;;) {
 		/*            CHASSIS TAB            */
 
-		std::string chassis_label_str = std::to_string(chassis::max_speed) + "         " +
-						std::to_string(chassis::distance_constant.convert(okapi::inch)) +
-						"          " +
-						std::to_string(chassis::turn_constant.convert(okapi::inch));
+		std::string chassis_label_str =
+			std::to_string(chassis::max_speed) + "         " +
+			std::to_string(chassis::distance_constant.convert(
+				okapi::inch)) +
+			"          " +
+			std::to_string(
+				chassis::turn_constant.convert(okapi::inch));
 		lv_label_set_text(chassis_label, chassis_label_str.c_str());
 
 		/*            INTAKE TAB            */
 
 		std::string intake_label_str =
-			std::to_string(intake::max_speed) + "                    " + std::to_string(intake::accel_step);
+			std::to_string(intake::max_speed) +
+			"                    " +
+			std::to_string(intake::accel_step);
 		lv_label_set_text(intake_label, intake_label_str.c_str());
 
 		/*            PUREPURSUIT TAB            */
 
 		std::string purepursuit_misc_label_str =
-			std::to_string(purepursuit::max_speed) + "     " + std::to_string(purepursuit::accel_step) +
-			"     " + std::to_string(purepursuit::inner_radius.convert(okapi::inch)) + "     " +
-			std::to_string(purepursuit::outer_radius.convert(okapi::inch));
-		lv_label_set_text(purepursuit_misc_label, purepursuit_misc_label_str.c_str());
+			std::to_string(purepursuit::max_speed) + "     " +
+			std::to_string(purepursuit::accel_step) + "     " +
+			std::to_string(purepursuit::inner_radius.convert(
+				okapi::inch)) +
+			"     " +
+			std::to_string(
+				purepursuit::outer_radius.convert(okapi::inch));
+		lv_label_set_text(purepursuit_misc_label,
+				  purepursuit_misc_label_str.c_str());
 
-		std::string purepursuit_pid_label_str = std::to_string(purepursuit::kP_vel) + "      " +
-							std::to_string(purepursuit::kD_vel) + "      " +
-							std::to_string(purepursuit::kP_ang) + "      " +
-							std::to_string(purepursuit::kD_ang) + "      ";
-		lv_label_set_text(purepursuit_pid_label, purepursuit_pid_label_str.c_str());
+		std::string purepursuit_pid_label_str =
+			std::to_string(purepursuit::kP_vel) + "      " +
+			std::to_string(purepursuit::kD_vel) + "      " +
+			std::to_string(purepursuit::kP_ang) + "      " +
+			std::to_string(purepursuit::kD_ang) + "      ";
+		lv_label_set_text(purepursuit_pid_label,
+				  purepursuit_pid_label_str.c_str());
 
 		pros::Task::delay_until(&now, 100);
 	}
@@ -670,7 +728,11 @@ init(void)
 	lv_obj_align(purepursuit_btnm, NULL, LV_ALIGN_CENTER, 0, 0);
 
 	purepursuit_misc_label = lv_label_create(purepursuit_tab, NULL);
-	lv_obj_align(purepursuit_misc_label, NULL, LV_ALIGN_IN_LEFT_MID, 20, -30);
+	lv_obj_align(purepursuit_misc_label,
+		     NULL,
+		     LV_ALIGN_IN_LEFT_MID,
+		     20,
+		     -30);
 
 	purepursuit_pid_label = lv_label_create(purepursuit_tab, NULL);
 	lv_obj_align(purepursuit_pid_label, NULL, LV_ALIGN_IN_LEFT_MID, 20, 40);
@@ -680,7 +742,9 @@ init(void)
 	/*            TASK            */
 
 	if (!configTask) {
-		configTask = std::make_shared<pros::Task>(config_task, "config task (xenon)");
+		configTask =
+			std::make_shared<pros::Task>(config_task,
+						     "config task (xenon)");
 		configTask->set_priority(TASK_PRIORITY_MIN);
 		logger::elog("config: create task (xenon)");
 	} else {

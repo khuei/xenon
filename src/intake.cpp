@@ -79,7 +79,8 @@ sort(double speed)
 	    !master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A))
 		internal_model->right(0);
 
-	if (optical->get_hue() > target_low_limit && optical->get_hue() < target_high_limit) {
+	if (optical->get_hue() > target_low_limit &&
+	    optical->get_hue() < target_high_limit) {
 		if (vision->get_object_count() != 0) {
 			internal_model->left(speed);
 			internal_model->right(speed);
@@ -87,7 +88,8 @@ sort(double speed)
 			internal_model->left(0);
 			internal_model->right(0);
 		}
-	} else if (optical->get_hue() > eject_low_limit && optical->get_hue() < eject_high_limit){
+	} else if (optical->get_hue() > eject_low_limit &&
+		   optical->get_hue() < eject_high_limit) {
 		if (vision->get_object_count() != 0) {
 			internal_model->right(-speed);
 			internal_model->left(speed);
@@ -113,8 +115,26 @@ init(void)
 	vision->set_auto_white_balance(false);
 	vision->set_exposure(150);
 
-	pros::vision_signature_s_t RED_SIG = pros::Vision::signature_from_utility(1, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
-	pros::vision_signature_s_t GREEN_SIG = pros::Vision::signature_from_utility(2, -2175, 1, -1087, -1549, 43, -753, 2.500, 0);
+	pros::vision_signature_s_t RED_SIG =
+		pros::Vision::signature_from_utility(1,
+						     8973,
+						     11143,
+						     10058,
+						     -2119,
+						     -1053,
+						     -1586,
+						     5.4,
+						     0);
+	pros::vision_signature_s_t GREEN_SIG =
+		pros::Vision::signature_from_utility(2,
+						     -2175,
+						     1,
+						     -1087,
+						     -1549,
+						     43,
+						     -753,
+						     2.500,
+						     0);
 	vision->set_signature(1, &RED_SIG);
 	vision->set_signature(2, &GREEN_SIG);
 
@@ -131,8 +151,10 @@ opcontrol(void)
 			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
 			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_internal(-intake::max_speed);
-			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1) &&
-				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+			else if (master.get_digital(
+					 pros::E_CONTROLLER_DIGITAL_R1) &&
+				 !master.get_digital(
+					 pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_internal(intake::max_speed);
 			else
 				intake::run_internal(0);
@@ -140,8 +162,10 @@ opcontrol(void)
 			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
 			    master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_front(-intake::max_speed);
-			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2) &&
-				 !master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+			else if (master.get_digital(
+					 pros::E_CONTROLLER_DIGITAL_R2) &&
+				 !master.get_digital(
+					 pros::E_CONTROLLER_DIGITAL_L2))
 				intake::run_front(intake::max_speed);
 			else
 				intake::run_front(0);
@@ -149,7 +173,8 @@ opcontrol(void)
 		case 1:
 			if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
 				intake::run_both(-intake::max_speed);
-			else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+			else if (master.get_digital(
+					 pros::E_CONTROLLER_DIGITAL_R2))
 				intake::run_both(intake::max_speed);
 			else
 				intake::run_both(0);
