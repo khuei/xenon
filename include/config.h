@@ -5,8 +5,8 @@
 
 namespace auton {
 
-extern std::vector<okapi::Point> path;
 extern std::string alliance_color;
+extern std::string path;
 
 } // namespace auton
 

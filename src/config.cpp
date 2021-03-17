@@ -8,11 +8,13 @@ namespace auton {
 
 enum tune_value {
 	ALLIANCE_COLOR,
+	PATH,
 };
 
 int current_tune_value = 0;
 
 std::string alliance_color;
+std::string path = "skill";
 
 void
 tuner(pros::controller_digital_e_t left,
@@ -20,6 +22,22 @@ tuner(pros::controller_digital_e_t left,
       pros::controller_digital_e_t increase,
       pros::controller_digital_e_t decrease)
 {
+		if (master.get_digital_new_press(left)) {
+		master.clear_line(2);
+		if (current_tune_value != ALLIANCE_COLOR)
+			current_tune_value--;
+		else
+			current_tune_value = PATH;
+	}
+
+	if (master.get_digital_new_press(right)) {
+		master.clear_line(2);
+		if (current_tune_value != PATH)
+			current_tune_value++;
+		else
+			current_tune_value = ALLIANCE_COLOR;
+	}
+
 	if (master.get_digital(left) || master.get_digital(right) || master.get_digital(decrease) ||
 	    master.get_digital(increase)) {
 		switch (current_tune_value) {
@@ -29,6 +47,13 @@ tuner(pros::controller_digital_e_t left,
 				auton::alliance_color = "blue";
 			if (master.get_digital_new_press(decrease))
 				auton::alliance_color = "red";
+			break;
+		case PATH:
+			master.print(2, 0, "path: %-14s", auton::path);
+			if (master.get_digital_new_press(increase))
+				auton::path = "left";
+			if (master.get_digital_new_press(decrease))
+				auton::path = "right";
 			break;
 		}
 	}
